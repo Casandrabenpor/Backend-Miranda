@@ -1,22 +1,27 @@
-import express from 'express';
-import { Booking } from '../models/interface';
+import { Router } from 'express';
 import {
   addBooking,
   deleteBooking,
   getBooking,
   updateBooking,
 } from '../services/bookingsService';
-const app = express();
+import bodyParser from 'body-parser';
 
-export const getBookingController = () => {
-  return getBooking();
-};
-export const postBookingController = (booking: Booking) => {
-  return addBooking(booking);
-};
-export const putBookingController = (booking: Booking) => {
-  return updateBooking(booking);
-};
-export const deleteBookingController = (id: string) => {
-  return deleteBooking(id);
-};
+export const bookingsController = Router();
+
+bookingsController.get('', (req, res) => {
+  res.status(200).send(getBooking());
+});
+
+bookingsController.post('', bodyParser.json(), (req, res) => {
+  res.status(200).send(addBooking(req.body));
+});
+
+bookingsController.put('', bodyParser.json(), (req, res) => {
+  res.status(200).send(updateBooking(req.body));
+});
+
+bookingsController.delete('', (req, res) => {
+  let id = req.query.id as string;
+  res.status(200).send(deleteBooking(id));
+});
