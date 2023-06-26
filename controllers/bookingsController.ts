@@ -2,6 +2,7 @@ import express from 'express';
 import { Booking } from '../models/interface';
 import {
   addBooking,
+  deleteBooking,
   getBooking,
   updateBooking,
 } from '../services/bookingsService';
@@ -16,6 +17,6 @@ export const postBookingController = (booking: Booking) => {
 export const putBookingController = (booking: Booking) => {
   return updateBooking(booking);
 };
-// export const deleteBookingController = (id: string) => {
-//   return deleteBooking(id);
-// };
+export const deleteBookingController = (id: string) => {
+  return deleteBooking(id);
+};

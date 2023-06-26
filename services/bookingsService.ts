@@ -10,7 +10,14 @@ export const addBooking = (booking: Booking) => {
   saveToDataBase(bookingsData, 'bookings.json');
 };
 export const updateBooking = (booking: Booking) => {
-  let index = bookingsData.findIndex((u) => u.id === booking.id);
+  let index = bookingsData.findIndex((b) => b.id === booking.id);
   bookingsData[index] = booking;
   saveToDataBase(bookingsData, 'bookings.json');
+};
+export const deleteBooking = (id: string) => {
+  let index = bookingsData.findIndex((b) => b.id === id);
+  console.log(`El id ${id} está en la posición ${index}`);
+  let filterBookings = bookingsData.filter((b) => b.id != id);
+  console.log(filterBookings[0]);
+  saveToDataBase(filterBookings, 'bookings.json');
 };

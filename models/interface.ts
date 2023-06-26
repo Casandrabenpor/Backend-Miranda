@@ -19,3 +19,18 @@ export interface Booking {
   room_number: string;
   status: string;
 }
+export interface Contact {
+  order_id: string;
+  date: string;
+  customer: string;
+  comment: string;
+}
+export interface Room {
+  room_number: number;
+  room_id: number;
+  amenities: string;
+  bed_type: string;
+  rate: number;
+  offer_price: number;
+  status: string;
+}
