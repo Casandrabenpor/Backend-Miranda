@@ -16,7 +16,6 @@ export const updateContact = (contact: Contact) => {
   saveToDataBase(contactData, 'contact.json');
 };
 export const deleteContact = (order_id: string) => {
-  let index = contactData.findIndex((c) => c.order_id === order_id);
   let filterContacts = contactData.filter((c) => c.order_id != order_id);
   saveToDataBase(filterContacts, 'contact.json');
 };

@@ -34,3 +34,8 @@ export interface Room {
   offer_price: number;
   status: string;
 }
+export interface Login {
+  name: string;
+  email: string;
+  password: string;
+}

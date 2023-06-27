@@ -1,12 +1,8 @@
-import express from 'express';
+import { Router } from 'express';
+import { bookingsController } from '../controllers/bookingsController';
 
-const router = express.Router();
+const bookingsRouter = Router();
 
-router.get('/', (req, res) => {
-  res.send('Fetching');
-});
+bookingsRouter.use('/bookings', bookingsController);
 
-router.post('/', (req, res) => {
-  res.send('saving');
-});
-export default router;
+export default bookingsRouter;

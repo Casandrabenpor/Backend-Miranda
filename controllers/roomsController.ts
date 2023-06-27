@@ -10,18 +10,18 @@ import bodyParser from 'body-parser';
 export const roomsController = Router();
 
 roomsController.get('', (req, res) => {
-  res.status(200).send(getRoom());
+  res.status(200).json(getRoom());
 });
 
 roomsController.post('', bodyParser.json(), (req, res) => {
-  res.status(200).send(addRoom(req.body));
+  res.status(200).json(addRoom(req.body));
 });
 
 roomsController.put('', bodyParser.json(), (req, res) => {
-  res.status(200).send(updateRoom(req.body));
+  res.status(200).json(updateRoom(req.body));
 });
 
 roomsController.delete('', (req, res) => {
   let id = parseInt(req.query.id as string);
-  res.status(200).send(deleteRoom(id));
+  res.status(200).json(deleteRoom(id));
 });

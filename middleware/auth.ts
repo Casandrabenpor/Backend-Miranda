@@ -6,8 +6,6 @@ export const verifyTokenMiddleware = (
   res: Response,
   next: () => void,
 ) => {
-  // const secretKey = 'TEST';
-
   const secretKey = process.env.SECRET_KEY as string; // Acceder a la variable de entorno SECRET_KEY
   // Obtener el token del encabezado de la solicitud
   const token = req.headers.authorization;
