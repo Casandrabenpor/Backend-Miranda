@@ -27,3 +27,5 @@ app.use('/contact', verifyTokenMiddleware, contactController);
 app.listen(PORT, () => {
   console.log(`connected to port ${PORT}`);
 });
+
+export default app;
