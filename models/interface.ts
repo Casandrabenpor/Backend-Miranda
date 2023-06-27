@@ -39,3 +39,23 @@ export interface Login {
   email: string;
   password: string;
 }
+
+export interface Info {
+  bookings: {
+    route: string;
+    methods: string[];
+  };
+  rooms: {
+    route: string;
+    methods: string[];
+  };
+  contacts: {
+    route: string;
+    methods: string[];
+  };
+  users: {
+    route: string;
+    methods: string[];
+  };
+  hotelName: string;
+}

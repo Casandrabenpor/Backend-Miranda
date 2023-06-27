@@ -5,6 +5,7 @@ import { roomsController } from './controllers/roomsController';
 import { verifyTokenMiddleware } from './middleware/auth';
 import { contactController } from './controllers/contactController';
 import { authenticationController } from './controllers/authController';
+import { infoController } from './controllers/infoController';
 require('dotenv').config();
 
 const app = express();
@@ -16,7 +17,7 @@ app.get('/', function (req: Request, res: Response) {
 
 //public routes
 app.use('/login', authenticationController);
-// app.use("/info", infoRouter);
+app.use('/info', infoController);
 
 app.use('/users', verifyTokenMiddleware, usersController);
 app.use('/bookings', verifyTokenMiddleware, bookingsController);
