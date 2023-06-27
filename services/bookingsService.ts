@@ -16,7 +16,6 @@ export const updateBooking = (booking: Booking) => {
 };
 export const deleteBooking = (id: string) => {
   let index = bookingsData.findIndex((b) => b.id === id);
-  console.log(`El id ${id} está en la posición ${index}`);
   let filterBookings = bookingsData.filter((b) => b.id != id);
   console.log(filterBookings[0]);
   saveToDataBase(filterBookings, 'bookings.json');

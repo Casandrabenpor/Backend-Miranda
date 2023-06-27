@@ -1,22 +1,28 @@
-import express from 'express';
+import { Router } from 'express';
 import {
   addUser,
   deleteUser,
-  getUsers,
+  getUser,
   updateUser,
 } from '../services/usersService';
-import { User } from '../models/interface';
-const app = express();
 
-export const getUsersController = () => {
-  return getUsers();
-};
-export const postUsersController = (user: User) => {
-  return addUser(user);
-};
-export const putUsersController = (user: User) => {
-  return updateUser(user);
-};
-export const deleteUserController = (id: number) => {
-  return deleteUser(id);
-};
+import bodyParser from 'body-parser';
+
+export const usersController = Router();
+
+usersController.get('', (req, res) => {
+  res.status(200).send(getUser());
+});
+
+usersController.post('', bodyParser.json(), (req, res) => {
+  res.status(200).send(addUser(req.body));
+});
+
+usersController.put('', bodyParser.json(), (req, res) => {
+  res.status(200).send(updateUser(req.body));
+});
+
+usersController.delete('', (req, res) => {
+  let id = parseInt(req.query.id as string);
+  res.status(200).send(deleteUser(id));
+});

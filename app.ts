@@ -1,14 +1,9 @@
 import express, { Request, Response } from 'express';
-import {
-  deleteUserController,
-  getUsersController,
-  postUsersController,
-  putUsersController,
-} from './controllers/usersController';
-import bodyParser from 'body-parser';
+import { usersController } from './controllers/usersController';
 import { bookingsController } from './controllers/bookingsController';
-import { getRoomsController } from './controllers/roomsController';
+import { roomsController } from './controllers/roomsController';
 import { verifyTokenMiddleware } from './middleware/auth';
+import { contactController } from './controllers/contactController';
 
 const app = express();
 const PORT = 3000;
@@ -17,27 +12,10 @@ app.get('/', function (req: Request, res: Response) {
   res.send('hello');
 });
 
-app
-  .route('/users')
-  .get(function (req, res) {
-    res.status(200).send(getUsersController());
-  })
-  .post(bodyParser.json(), function (req, res) {
-    res.status(200).send(postUsersController(req.body));
-  })
-  .put(bodyParser.json(), function (req, res) {
-    res.status(200).send(putUsersController(req.body));
-  })
-  .delete(bodyParser.json(), function (req, res) {
-    let id = parseInt(req.query.id as string);
-    res.status(200).send(deleteUserController(id));
-  });
-
+app.use('/users', verifyTokenMiddleware, usersController);
 app.use('/bookings', verifyTokenMiddleware, bookingsController);
-
-app.route('/rooms').get(function (req, res) {
-  res.status(200).send(getRoomsController());
-});
+app.use('/rooms', verifyTokenMiddleware, roomsController);
+app.use('/contact', verifyTokenMiddleware, contactController);
 
 app.listen(PORT, () => {
   console.log(`connected to port ${PORT}`);

@@ -2,7 +2,7 @@ import usersData from '../data/users.json';
 import { User } from '../models/interface';
 import { saveToDataBase } from './dataBaseService';
 
-export const getUsers = () => {
+export const getUser = () => {
   return usersData;
 };
 export const addUser = (user: User) => {
