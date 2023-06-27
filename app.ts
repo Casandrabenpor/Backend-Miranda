@@ -4,6 +4,7 @@ import { bookingsController } from './controllers/bookingsController';
 import { roomsController } from './controllers/roomsController';
 import { verifyTokenMiddleware } from './middleware/auth';
 import { contactController } from './controllers/contactController';
+require('dotenv').config();
 
 const app = express();
 const PORT = 3000;

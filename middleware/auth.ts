@@ -6,7 +6,9 @@ export const verifyTokenMiddleware = (
   res: Response,
   next: () => void,
 ) => {
-  const secretKey = 'TEST';
+  // const secretKey = 'TEST';
+
+  const secretKey = process.env.SECRET_KEY; // Acceder a la variable de entorno SECRET_KEY
   // Obtener el token del encabezado de la solicitud
   const token = req.headers.authorization;
 
@@ -18,7 +20,7 @@ export const verifyTokenMiddleware = (
   try {
     const tokenValue = token?.split(' ')[1];
     // Verificar y decodificar el token utilizando la clave secreta
-    jwt.verify(tokenValue, secretKey);
+    jwt.verify(tokenValue, secretKey as jwt.Secret);
     next();
   } catch (error) {
     // Si el token es inválido, devolver un error de autenticación
