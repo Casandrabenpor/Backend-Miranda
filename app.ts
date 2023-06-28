@@ -1,4 +1,4 @@
-import express, { Request, Response } from 'express';
+import express from 'express';
 import { usersController } from './controllers/usersController';
 import { bookingsController } from './controllers/bookingsController';
 import { roomsController } from './controllers/roomsController';
@@ -8,17 +8,13 @@ import { authenticationController } from './controllers/authController';
 import { infoController } from './controllers/infoController';
 require('dotenv').config();
 
-const app = express();
+export const app = express();
 const PORT = 3000;
-
-app.get('/', function (req: Request, res: Response) {
-  res.send('hello');
-});
 
 //public routes
 app.use('/login', authenticationController);
 app.use('/info', infoController);
-
+//private routes
 app.use('/users', verifyTokenMiddleware, usersController);
 app.use('/bookings', verifyTokenMiddleware, bookingsController);
 app.use('/rooms', verifyTokenMiddleware, roomsController);
