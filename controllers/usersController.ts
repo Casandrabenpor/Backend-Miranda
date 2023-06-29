@@ -2,6 +2,7 @@ import { Router } from 'express';
 import {
   addUser,
   deleteUser,
+  getById,
   getUser,
   updateUser,
 } from '../services/usersService';
@@ -13,7 +14,15 @@ export const usersController = Router();
 usersController.get('', (req, res) => {
   res.status(200).json(getUser());
 });
-
+usersController.get('/:id', (req, res) => {
+  const userId = parseInt(req.params.id);
+  const user = getById(userId);
+  if (user !== null) {
+    res.status(200).json(user);
+  } else {
+    res.status(404).json({ message: 'User not found' });
+  }
+});
 usersController.post('', bodyParser.json(), (req, res) => {
   res.status(200).json(addUser(req.body));
 });

@@ -5,6 +5,10 @@ import { saveToDataBase } from './dataBaseService';
 export const getUser = () => {
   return usersData;
 };
+export const getById = (userId: number) => {
+  const user = usersData.find((u) => u.id === userId) || null;
+  return user;
+};
 export const addUser = (user: User) => {
   usersData.push(user);
   saveToDataBase(usersData, 'users.json');

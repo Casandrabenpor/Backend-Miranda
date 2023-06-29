@@ -14,11 +14,22 @@ export const addRoom = (room: Room) => {
   roomsData.push(room);
   saveToDataBase(roomsData, 'rooms.json');
 };
+
 export const updateRoom = (room: Room) => {
-  let index = roomsData.findIndex((r) => r.room_id === room.room_id);
-  roomsData[index] = room;
-  saveToDataBase(roomsData, 'rooms.json');
+  const existingRoom = roomsData.find((r) => r.room_id === room.room_id);
+
+  if (existingRoom) {
+    const updatedRoom: Room = {
+      ...room,
+      room_id: existingRoom.room_id,
+    };
+
+    const index = roomsData.findIndex((r) => r.room_id === room.room_id);
+    roomsData[index] = updatedRoom;
+    saveToDataBase(roomsData, 'rooms.json');
+  }
 };
+
 export const deleteRoom = (room_id: number) => {
   let index = roomsData.findIndex((r) => r.room_id === room_id);
   let filterRooms = roomsData.filter((b) => b.room_id != room_id);
