@@ -5,6 +5,7 @@ import {
   addContact,
   updateContact,
   deleteContact,
+  getById,
 } from '../services/contactService';
 
 export const contactController = Router();
@@ -12,7 +13,15 @@ export const contactController = Router();
 contactController.get('', (req, res) => {
   res.status(200).json(getContact());
 });
-
+contactController.get('/:id', (req, res) => {
+  const contactId = req.params.id;
+  const contact = getById(contactId);
+  if (contact !== null) {
+    res.status(200).json(contact);
+  } else {
+    res.status(404).json({ message: 'Contact not found' });
+  }
+});
 contactController.post('', bodyParser.json(), (req, res) => {
   res.status(200).json(addContact(req.body));
 });
