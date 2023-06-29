@@ -2,6 +2,7 @@ import { Router } from 'express';
 import {
   addRoom,
   deleteRoom,
+  getById,
   getRoom,
   updateRoom,
 } from '../services/roomsService';
@@ -11,6 +12,15 @@ export const roomsController = Router();
 
 roomsController.get('', (req, res) => {
   res.status(200).json(getRoom());
+});
+roomsController.get('/:id', (req, res) => {
+  const roomId = parseInt(req.params.id);
+  const room = getById(roomId);
+  if (room !== null) {
+    res.status(200).json(room);
+  } else {
+    res.status(404).json({ message: 'Room not found' });
+  }
 });
 
 roomsController.post('', bodyParser.json(), (req, res) => {

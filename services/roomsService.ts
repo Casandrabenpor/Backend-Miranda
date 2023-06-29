@@ -5,6 +5,11 @@ import { saveToDataBase } from './dataBaseService';
 export const getRoom = () => {
   return roomsData;
 };
+export const getById = (roomId: number) => {
+  const room = roomsData.find((r) => r.room_id === roomId) || null;
+  return room;
+};
+
 export const addRoom = (room: Room) => {
   roomsData.push(room);
   saveToDataBase(roomsData, 'rooms.json');
