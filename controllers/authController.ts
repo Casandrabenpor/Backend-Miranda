@@ -11,6 +11,6 @@ authenticationController.post('', bodyParser.json(), (req, res) => {
     return res.status(401).json({ message: 'Invalid username' });
   } else {
     let token = generateAccessToken(req.body);
-    return res.status(200).json({ token: token });
+    return res.status(200).json({ token });
   }
 });

@@ -14,11 +14,6 @@ export const addBooking = (booking: Booking) => {
   bookingsData.push(booking);
   saveToDataBase(bookingsData, 'bookings.json');
 };
-// export const updateBooking = (booking: Booking) => {
-//   let index = bookingsData.findIndex((b) => b.id === booking.id);
-//   bookingsData[index] = booking;
-//   saveToDataBase(bookingsData, 'bookings.json');
-// };
 
 export const updateBooking = (booking: Booking) => {
   const existingBooking = bookingsData.find((b) => b.id === booking.id);

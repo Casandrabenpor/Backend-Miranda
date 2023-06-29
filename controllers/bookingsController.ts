@@ -17,7 +17,6 @@ bookingsController.get('/', (req, res) => {
 bookingsController.get('/:id', (req, res) => {
   const bookingId = req.params.id;
   const booking = getById(bookingId);
-
   if (booking !== null) {
     res.status(200).json(booking);
   } else {

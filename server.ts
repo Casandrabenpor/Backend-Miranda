@@ -1,13 +1,7 @@
-// import app from './app';
+import app from './app';
 
-// require('dotenv').config();
+const PORT = 3000;
 
-// const PORT = 3000;
-
-// app.set('port', PORT);
-
-// const server = app.listen(app.get('port'), () => {
-//   console.log(`Connected to port ${PORT}`);
-// });
-
-// export default server;
+app.listen(PORT, () => {
+  console.log(`connected to port ${PORT}`);
+});

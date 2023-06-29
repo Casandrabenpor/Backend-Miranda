@@ -9,7 +9,6 @@ import { infoController } from './controllers/infoController';
 require('dotenv').config();
 
 export const app = express();
-const PORT = 3000;
 
 //public routes
 app.use('/login', authenticationController);
@@ -19,9 +18,5 @@ app.use('/users', verifyTokenMiddleware, usersController);
 app.use('/bookings', verifyTokenMiddleware, bookingsController);
 app.use('/rooms', verifyTokenMiddleware, roomsController);
 app.use('/contact', verifyTokenMiddleware, contactController);
-
-app.listen(PORT, () => {
-  console.log(`connected to port ${PORT}`);
-});
 
 export default app;
