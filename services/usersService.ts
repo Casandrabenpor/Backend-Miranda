@@ -15,11 +15,20 @@ export const addUser = (user: User) => {
 };
 
 export const updateUser = (user: User) => {
-  let index = usersData.findIndex((u) => u.id === user.id);
-  usersData[index] = user;
-  saveToDataBase(usersData, 'users.json');
-};
+  const existingUser = usersData.find((u) => u.id === user.id);
 
+  if (existingUser) {
+    // Crear una copia de la reserva existente sin modificar el ID
+    const updateUser: User = {
+      ...user,
+      id: existingUser.id,
+    };
+
+    let index = usersData.findIndex((u) => u.id === user.id);
+    usersData[index] = updateUser;
+    saveToDataBase(usersData, 'users.json');
+  }
+};
 export const deleteUser = (id: number) => {
   let filterUsers = usersData.filter((u) => u.id != id);
   saveToDataBase(filterUsers, 'users.json');
