@@ -1,0 +1,13 @@
+service: nodejs-aws-lambda
+provider:
+  name: aws
+  region: eu-west-1
+  environment:
+    SECRET: 'secret'
+  runtime: nodejs18.x
+functions:
+  app:
+    handler: dist/lambda.handler
+    events:
+      - http: ANY /
+      - http: ANY /{proxy+}

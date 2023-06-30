@@ -22,7 +22,7 @@ export const updateBooking = (booking: Booking) => {
     // Crear una copia de la reserva existente sin modificar el ID
     const updatedBooking: Booking = {
       ...booking,
-      id: existingBooking.id ? existingBooking.id.toString() : '', // Convertir el ID a string si existe, de lo contrario, asignar una cadena vacía
+      id: existingBooking.id ? existingBooking.id.toString() : '',
     };
 
     let index = bookingsData.findIndex((b) => b.id === booking.id);

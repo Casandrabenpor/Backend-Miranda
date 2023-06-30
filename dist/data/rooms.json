@@ -1,0 +1,902 @@
+[
+    {
+        "room_number": 91,
+        "room_id": 26,
+        "amenities": ["Recreational activities"],
+        "bed_type": "Suite",
+        "rate": 92,
+        "offer_price": 30,
+        "status": "Occupied"
+    },
+    {
+        "room_number": 51,
+        "room_id": 71,
+        "amenities": ["Mini Bar / Mini Fridge"],
+        "bed_type": "Suite",
+        "rate": 47,
+        "offer_price": 57,
+        "status": "Available"
+    },
+    {
+        "room_number": 77,
+        "room_id": 8,
+        "amenities": ["Kitchen"],
+        "bed_type": "Double Superior",
+        "rate": 24,
+        "offer_price": 24,
+        "status": "Occupied"
+    },
+    {
+        "room_number": 50,
+        "room_id": 41,
+        "amenities": ["Mini Bar / Mini Fridge"],
+        "bed_type": "Double Superior",
+        "rate": 77,
+        "offer_price": 42,
+        "status": "Occupied"
+    },
+    {
+        "room_number": 87,
+        "room_id": 26,
+        "amenities": ["Tea / Coffee Maker"],
+        "bed_type": "Double Superior",
+        "rate": 80,
+        "offer_price": 13,
+        "status": "Available"
+    },
+    {
+        "room_number": 42,
+        "room_id": 78,
+        "amenities": ["Mini Bar / Mini Fridge"],
+        "bed_type": "Suite",
+        "rate": 62,
+        "offer_price": 4,
+        "status": "Available"
+    },
+    {
+        "room_number": 100,
+        "room_id": 66,
+        "amenities": ["Mini Bar / Mini Fridge"],
+        "bed_type": "Suite",
+        "rate": 29,
+        "offer_price": 41,
+        "status": "Available"
+    },
+    {
+        "room_number": 88,
+        "room_id": 38,
+        "amenities": ["Swimming pool"],
+        "bed_type": "Double Bed",
+        "rate": 3,
+        "offer_price": 12,
+        "status": "Available"
+    },
+    {
+        "room_number": 96,
+        "room_id": 1,
+        "amenities": ["Air Conditioner"],
+        "bed_type": "Suite",
+        "rate": 41,
+        "offer_price": 76,
+        "status": "Occupied"
+    },
+    {
+        "room_number": 32,
+        "room_id": 42,
+        "amenities": ["Swimming pool", "Kitchen"],
+        "bed_type": "Single Bed",
+        "rate": 57,
+        "offer_price": 30,
+        "status": "Occupied"
+    },
+    {
+        "room_number": 84,
+        "room_id": 48,
+        "amenities": ["Air Conditioner"],
+        "bed_type": "Double Bed",
+        "rate": 18,
+        "offer_price": 64,
+        "status": "Occupied"
+    },
+    {
+        "room_number": 69,
+        "room_id": 16,
+        "amenities": ["Swimming pool"],
+        "bed_type": "Double Superior",
+        "rate": 67,
+        "offer_price": 79,
+        "status": "Available"
+    },
+    {
+        "room_number": 17,
+        "room_id": 76,
+        "amenities": ["Air Conditioner"],
+        "bed_type": "Suite",
+        "rate": 14,
+        "offer_price": 96,
+        "status": "Occupied"
+    },
+    {
+        "room_number": 3,
+        "room_id": 15,
+        "amenities": ["Kitchen"],
+        "bed_type": "Suite",
+        "rate": 99,
+        "offer_price": 9,
+        "status": "Available"
+    },
+    {
+        "room_number": 95,
+        "room_id": 23,
+        "amenities": ["Swimming pool"],
+        "bed_type": "Single Bed",
+        "rate": 50,
+        "offer_price": 67,
+        "status": "Available"
+    },
+    {
+        "room_number": 65,
+        "room_id": 12,
+        "amenities": ["Air Conditioner"],
+        "bed_type": "Double Superior",
+        "rate": 91,
+        "offer_price": 79,
+        "status": "Available"
+    },
+    {
+        "room_number": 78,
+        "room_id": 66,
+        "amenities": ["Tea / Coffee Maker"],
+        "bed_type": "Double Bed",
+        "rate": 70,
+        "offer_price": 22,
+        "status": "Occupied"
+    },
+    {
+        "room_number": 19,
+        "room_id": 30,
+        "amenities": ["Breakfast"],
+        "bed_type": "Suite",
+        "rate": 58,
+        "offer_price": 26,
+        "status": "Available"
+    },
+    {
+        "room_number": 84,
+        "room_id": 14,
+        "amenities": ["Recreational activities"],
+        "bed_type": "Single Bed",
+        "rate": 40,
+        "offer_price": 60,
+        "status": "Occupied"
+    },
+    {
+        "room_number": 85,
+        "room_id": 23,
+        "amenities": ["Swimming pool"],
+        "bed_type": "Suite",
+        "rate": 46,
+        "offer_price": 27,
+        "status": "Available"
+    },
+    {
+        "room_number": 72,
+        "room_id": 3,
+        "amenities": ["Breakfast"],
+        "bed_type": "Double Superior",
+        "rate": 76,
+        "offer_price": 10,
+        "status": "Available"
+    },
+    {
+        "room_number": 14,
+        "room_id": 68,
+        "amenities": ["Recreational activities"],
+        "bed_type": "Double Bed",
+        "rate": 50,
+        "offer_price": 39,
+        "status": "Occupied"
+    },
+    {
+        "room_number": 18,
+        "room_id": 34,
+        "amenities": ["Breakfast"],
+        "bed_type": "Double Superior",
+        "rate": 15,
+        "offer_price": 72,
+        "status": "Available"
+    },
+    {
+        "room_number": 46,
+        "room_id": 64,
+        "amenities": ["Recreational activities"],
+        "bed_type": "Double Bed",
+        "rate": 41,
+        "offer_price": 72,
+        "status": "Occupied"
+    },
+    {
+        "room_number": 58,
+        "room_id": 87,
+        "amenities": ["Mini Bar / Mini Fridge"],
+        "bed_type": "Single Bed",
+        "rate": 28,
+        "offer_price": 22,
+        "status": "Available"
+    },
+    {
+        "room_number": 63,
+        "room_id": 71,
+        "amenities": ["Breakfast"],
+        "bed_type": "Single Bed",
+        "rate": 78,
+        "offer_price": 19,
+        "status": "Occupied"
+    },
+    {
+        "room_number": 23,
+        "room_id": 12,
+        "amenities": ["Swimming pool"],
+        "bed_type": "Double Bed",
+        "rate": 15,
+        "offer_price": 56,
+        "status": "Occupied"
+    },
+    {
+        "room_number": 95,
+        "room_id": 35,
+        "amenities": ["Kitchen"],
+        "bed_type": "Double Superior",
+        "rate": 11,
+        "offer_price": 59,
+        "status": "Available"
+    },
+    {
+        "room_number": 14,
+        "room_id": 76,
+        "amenities": ["Air Conditioner"],
+        "bed_type": "Suite",
+        "rate": 8,
+        "offer_price": 29,
+        "status": "Available"
+    },
+    {
+        "room_number": 19,
+        "room_id": 81,
+        "amenities": ["Mini Bar / Mini Fridge"],
+        "bed_type": "Suite",
+        "rate": 63,
+        "offer_price": 26,
+        "status": "Available"
+    },
+    {
+        "room_number": 63,
+        "room_id": 50,
+        "amenities": ["Breakfast"],
+        "bed_type": "Double Bed",
+        "rate": 73,
+        "offer_price": 74,
+        "status": "Occupied"
+    },
+    {
+        "room_number": 3,
+        "room_id": 67,
+        "amenities": ["Air Conditioner"],
+        "bed_type": "Double Bed",
+        "rate": 63,
+        "offer_price": 28,
+        "status": "Available"
+    },
+    {
+        "room_number": 49,
+        "room_id": 61,
+        "amenities": ["Swimming pool"],
+        "bed_type": "Double Bed",
+        "rate": 40,
+        "offer_price": 59,
+        "status": "Available"
+    },
+    {
+        "room_number": 69,
+        "room_id": 97,
+        "amenities": ["Kitchen"],
+        "bed_type": "Single Bed",
+        "rate": 21,
+        "offer_price": 96,
+        "status": "Occupied"
+    },
+    {
+        "room_number": 90,
+        "room_id": 85,
+        "amenities": ["Swimming pool"],
+        "bed_type": "Double Bed",
+        "rate": 45,
+        "offer_price": 76,
+        "status": "Occupied"
+    },
+    {
+        "room_number": 56,
+        "room_id": 59,
+        "amenities": ["Swimming pool"],
+        "bed_type": "Double Bed",
+        "rate": 40,
+        "offer_price": 86,
+        "status": "Occupied"
+    },
+    {
+        "room_number": 1,
+        "room_id": 95,
+        "amenities": ["Mini Bar / Mini Fridge"],
+        "bed_type": "Suite",
+        "rate": 36,
+        "offer_price": 90,
+        "status": "Available"
+    },
+    {
+        "room_number": 39,
+        "room_id": 50,
+        "amenities": ["Breakfast"],
+        "bed_type": "Double Bed",
+        "rate": 61,
+        "offer_price": 48,
+        "status": "Occupied"
+    },
+    {
+        "room_number": 13,
+        "room_id": 97,
+        "amenities": ["Air Conditioner"],
+        "bed_type": "Double Superior",
+        "rate": 53,
+        "offer_price": 18,
+        "status": "Available"
+    },
+    {
+        "room_number": 52,
+        "room_id": 82,
+        "amenities": ["Mini Bar / Mini Fridge"],
+        "bed_type": "Suite",
+        "rate": 80,
+        "offer_price": 80,
+        "status": "Occupied"
+    },
+    {
+        "room_number": 50,
+        "room_id": 80,
+        "amenities": ["Tea / Coffee Maker"],
+        "bed_type": "Single Bed",
+        "rate": 18,
+        "offer_price": 69,
+        "status": "Available"
+    },
+    {
+        "room_number": 98,
+        "room_id": 57,
+        "amenities": ["Tea / Coffee Maker"],
+        "bed_type": "Single Bed",
+        "rate": 7,
+        "offer_price": 11,
+        "status": "Available"
+    },
+    {
+        "room_number": 62,
+        "room_id": 56,
+        "amenities": ["Swimming pool"],
+        "bed_type": "Double Superior",
+        "rate": 74,
+        "offer_price": 77,
+        "status": "Occupied"
+    },
+    {
+        "room_number": 46,
+        "room_id": 87,
+        "amenities": ["Recreational activities"],
+        "bed_type": "Single Bed",
+        "rate": 37,
+        "offer_price": 85,
+        "status": "Available"
+    },
+    {
+        "room_number": 82,
+        "room_id": 32,
+        "amenities": ["Swimming pool"],
+        "bed_type": "Double Bed",
+        "rate": 80,
+        "offer_price": 10,
+        "status": "Occupied"
+    },
+    {
+        "room_number": 22,
+        "room_id": 45,
+        "amenities": ["Tea / Coffee Maker"],
+        "bed_type": "Double Superior",
+        "rate": 48,
+        "offer_price": 66,
+        "status": "Available"
+    },
+    {
+        "room_number": 48,
+        "room_id": 33,
+        "amenities": ["Tea / Coffee Maker"],
+        "bed_type": "Double Superior",
+        "rate": 38,
+        "offer_price": 37,
+        "status": "Available"
+    },
+    {
+        "room_number": 35,
+        "room_id": 74,
+        "amenities": ["Mini Bar / Mini Fridge"],
+        "bed_type": "Single Bed",
+        "rate": 57,
+        "offer_price": 74,
+        "status": "Available"
+    },
+    {
+        "room_number": 84,
+        "room_id": 16,
+        "amenities": ["Swimming pool"],
+        "bed_type": "Suite",
+        "rate": 85,
+        "offer_price": 27,
+        "status": "Occupied"
+    },
+    {
+        "room_number": 35,
+        "room_id": 45,
+        "amenities": ["Breakfast"],
+        "bed_type": "Double Superior",
+        "rate": 94,
+        "offer_price": 18,
+        "status": "Occupied"
+    },
+    {
+        "room_number": 82,
+        "room_id": 91,
+        "amenities": ["Breakfast"],
+        "bed_type": "Suite",
+        "rate": 14,
+        "offer_price": 22,
+        "status": "Available"
+    },
+    {
+        "room_number": 9,
+        "room_id": 57,
+        "amenities": ["Breakfast"],
+        "bed_type": "Double Superior",
+        "rate": 96,
+        "offer_price": 85,
+        "status": "Occupied"
+    },
+    {
+        "room_number": 29,
+        "room_id": 60,
+        "amenities": ["Recreational activities"],
+        "bed_type": "Suite",
+        "rate": 15,
+        "offer_price": 38,
+        "status": "Available"
+    },
+    {
+        "room_number": 23,
+        "room_id": 27,
+        "amenities": ["Air Conditioner"],
+        "bed_type": "Suite",
+        "rate": 29,
+        "offer_price": 7,
+        "status": "Occupied"
+    },
+    {
+        "room_number": 59,
+        "room_id": 28,
+        "amenities": ["Kitchen"],
+        "bed_type": "Double Bed",
+        "rate": 74,
+        "offer_price": 2,
+        "status": "Available"
+    },
+    {
+        "room_number": 46,
+        "room_id": 32,
+        "amenities": ["Mini Bar / Mini Fridge"],
+        "bed_type": "Double Superior",
+        "rate": 91,
+        "offer_price": 67,
+        "status": "Occupied"
+    },
+    {
+        "room_number": 91,
+        "room_id": 83,
+        "amenities": ["Kitchen"],
+        "bed_type": "Suite",
+        "rate": 92,
+        "offer_price": 15,
+        "status": "Occupied"
+    },
+    {
+        "room_number": 23,
+        "room_id": 60,
+        "amenities": ["Mini Bar / Mini Fridge"],
+        "bed_type": "Suite",
+        "rate": 77,
+        "offer_price": 36,
+        "status": "Available"
+    },
+    {
+        "room_number": 93,
+        "room_id": 60,
+        "amenities": ["Kitchen"],
+        "bed_type": "Suite",
+        "rate": 47,
+        "offer_price": 56,
+        "status": "Available"
+    },
+    {
+        "room_number": 29,
+        "room_id": 72,
+        "amenities": ["Breakfast"],
+        "bed_type": "Double Superior",
+        "rate": 38,
+        "offer_price": 11,
+        "status": "Occupied"
+    },
+    {
+        "room_number": 100,
+        "room_id": 26,
+        "amenities": ["Swimming pool"],
+        "bed_type": "Double Superior",
+        "rate": 25,
+        "offer_price": 12,
+        "status": "Available"
+    },
+    {
+        "room_number": 2,
+        "room_id": 56,
+        "amenities": ["Mini Bar / Mini Fridge"],
+        "bed_type": "Double Bed",
+        "rate": 45,
+        "offer_price": 56,
+        "status": "Available"
+    },
+    {
+        "room_number": 98,
+        "room_id": 32,
+        "amenities": ["Swimming pool"],
+        "bed_type": "Single Bed",
+        "rate": 81,
+        "offer_price": 63,
+        "status": "Available"
+    },
+    {
+        "room_number": 69,
+        "room_id": 97,
+        "amenities": ["Swimming pool"],
+        "bed_type": "Double Superior",
+        "rate": 29,
+        "offer_price": 88,
+        "status": "Available"
+    },
+    {
+        "room_number": 44,
+        "room_id": 85,
+        "amenities": ["Kitchen"],
+        "bed_type": "Suite",
+        "rate": 83,
+        "offer_price": 97,
+        "status": "Occupied"
+    },
+    {
+        "room_number": 60,
+        "room_id": 6,
+        "amenities": ["Mini Bar / Mini Fridge"],
+        "bed_type": "Double Bed",
+        "rate": 26,
+        "offer_price": 62,
+        "status": "Occupied"
+    },
+    {
+        "room_number": 2,
+        "room_id": 23,
+        "amenities": ["Swimming pool"],
+        "bed_type": "Single Bed",
+        "rate": 38,
+        "offer_price": 67,
+        "status": "Occupied"
+    },
+    {
+        "room_number": 86,
+        "room_id": 2,
+        "amenities": ["Swimming pool"],
+        "bed_type": "Double Superior",
+        "rate": 72,
+        "offer_price": 89,
+        "status": "Available"
+    },
+    {
+        "room_number": 73,
+        "room_id": 25,
+        "amenities": ["Swimming pool"],
+        "bed_type": "Suite",
+        "rate": 58,
+        "offer_price": 82,
+        "status": "Available"
+    },
+    {
+        "room_number": 82,
+        "room_id": 90,
+        "amenities": ["Air Conditioner"],
+        "bed_type": "Double Superior",
+        "rate": 70,
+        "offer_price": 23,
+        "status": "Available"
+    },
+    {
+        "room_number": 62,
+        "room_id": 24,
+        "amenities": ["Swimming pool"],
+        "bed_type": "Suite",
+        "rate": 89,
+        "offer_price": 18,
+        "status": "Occupied"
+    },
+    {
+        "room_number": 15,
+        "room_id": 32,
+        "amenities": ["Swimming pool"],
+        "bed_type": "Single Bed",
+        "rate": 20,
+        "offer_price": 45,
+        "status": "Available"
+    },
+    {
+        "room_number": 6,
+        "room_id": 62,
+        "amenities": ["Recreational activities"],
+        "bed_type": "Double Bed",
+        "rate": 23,
+        "offer_price": 65,
+        "status": "Available"
+    },
+    {
+        "room_number": 10,
+        "room_id": 28,
+        "amenities": ["Breakfast"],
+        "bed_type": "Double Superior",
+        "rate": 6,
+        "offer_price": 16,
+        "status": "Available"
+    },
+    {
+        "room_number": 21,
+        "room_id": 14,
+        "amenities": ["Tea / Coffee Maker"],
+        "bed_type": "Double Bed",
+        "rate": 100,
+        "offer_price": 57,
+        "status": "Available"
+    },
+    {
+        "room_number": 54,
+        "room_id": 43,
+        "amenities": ["Breakfast"],
+        "bed_type": "Double Superior",
+        "rate": 28,
+        "offer_price": 45,
+        "status": "Available"
+    },
+    {
+        "room_number": 13,
+        "room_id": 75,
+        "amenities": ["Breakfast"],
+        "bed_type": "Double Bed",
+        "rate": 75,
+        "offer_price": 31,
+        "status": "Occupied"
+    },
+    {
+        "room_number": 79,
+        "room_id": 76,
+        "amenities": ["Kitchen"],
+        "bed_type": "Single Bed",
+        "rate": 93,
+        "offer_price": 63,
+        "status": "Available"
+    },
+    {
+        "room_number": 74,
+        "room_id": 46,
+        "amenities": ["Air Conditioner"],
+        "bed_type": "Double Superior",
+        "rate": 36,
+        "offer_price": 17,
+        "status": "Occupied"
+    },
+    {
+        "room_number": 29,
+        "room_id": 30,
+        "amenities": ["Tea / Coffee Maker"],
+        "bed_type": "Suite",
+        "rate": 46,
+        "offer_price": 24,
+        "status": "Occupied"
+    },
+    {
+        "room_number": 88,
+        "room_id": 26,
+        "amenities": ["Tea / Coffee Maker"],
+        "bed_type": "Suite",
+        "rate": 19,
+        "offer_price": 87,
+        "status": "Available"
+    },
+    {
+        "room_number": 68,
+        "room_id": 76,
+        "amenities": ["Mini Bar / Mini Fridge"],
+        "bed_type": "Double Superior",
+        "rate": 10,
+        "offer_price": 12,
+        "status": "Occupied"
+    },
+    {
+        "room_number": 18,
+        "room_id": 37,
+        "amenities": ["Tea / Coffee Maker"],
+        "bed_type": "Suite",
+        "rate": 23,
+        "offer_price": 29,
+        "status": "Available"
+    },
+    {
+        "room_number": 10,
+        "room_id": 44,
+        "amenities": ["Swimming pool"],
+        "bed_type": "Suite",
+        "rate": 83,
+        "offer_price": 7,
+        "status": "Occupied"
+    },
+    {
+        "room_number": 23,
+        "room_id": 3,
+        "amenities": ["Tea / Coffee Maker"],
+        "bed_type": "Suite",
+        "rate": 43,
+        "offer_price": 53,
+        "status": "Available"
+    },
+    {
+        "room_number": 100,
+        "room_id": 53,
+        "amenities": ["Kitchen"],
+        "bed_type": "Double Bed",
+        "rate": 31,
+        "offer_price": 57,
+        "status": "Available"
+    },
+    {
+        "room_number": 11,
+        "room_id": 70,
+        "amenities": ["Kitchen"],
+        "bed_type": "Double Superior",
+        "rate": 60,
+        "offer_price": 3,
+        "status": "Occupied"
+    },
+    {
+        "room_number": 32,
+        "room_id": 68,
+        "amenities": ["Recreational activities"],
+        "bed_type": "Suite",
+        "rate": 84,
+        "offer_price": 18,
+        "status": "Occupied"
+    },
+    {
+        "room_number": 95,
+        "room_id": 54,
+        "amenities": ["Breakfast"],
+        "bed_type": "Single Bed",
+        "rate": 2,
+        "offer_price": 40,
+        "status": "Available"
+    },
+    {
+        "room_number": 89,
+        "room_id": 2,
+        "amenities": ["Air Conditioner"],
+        "bed_type": "Single Bed",
+        "rate": 49,
+        "offer_price": 54,
+        "status": "Available"
+    },
+    {
+        "room_number": 97,
+        "room_id": 16,
+        "amenities": ["Mini Bar / Mini Fridge"],
+        "bed_type": "Double Bed",
+        "rate": 80,
+        "offer_price": 37,
+        "status": "Available"
+    },
+    {
+        "room_number": 70,
+        "room_id": 70,
+        "amenities": ["Swimming pool"],
+        "bed_type": "Single Bed",
+        "rate": 3,
+        "offer_price": 73,
+        "status": "Available"
+    },
+    {
+        "room_number": 33,
+        "room_id": 23,
+        "amenities": ["Air Conditioner"],
+        "bed_type": "Double Superior",
+        "rate": 92,
+        "offer_price": 48,
+        "status": "Available"
+    },
+    {
+        "room_number": 3,
+        "room_id": 28,
+        "amenities": ["Breakfast"],
+        "bed_type": "Suite",
+        "rate": 78,
+        "offer_price": 20,
+        "status": "Occupied"
+    },
+    {
+        "room_number": 28,
+        "room_id": 25,
+        "amenities": ["Recreational activities"],
+        "bed_type": "Double Superior",
+        "rate": 81,
+        "offer_price": 67,
+        "status": "Available"
+    },
+    {
+        "room_number": 20,
+        "room_id": 51,
+        "amenities": ["Recreational activities"],
+        "bed_type": "Single Bed",
+        "rate": 22,
+        "offer_price": 87,
+        "status": "Available"
+    },
+    {
+        "room_number": 95,
+        "room_id": 35,
+        "amenities": ["Air Conditioner"],
+        "bed_type": "Single Bed",
+        "rate": 36,
+        "offer_price": 17,
+        "status": "Occupied"
+    },
+    {
+        "room_number": 84,
+        "room_id": 92,
+        "amenities": ["Swimming pool"],
+        "bed_type": "Double Bed",
+        "rate": 93,
+        "offer_price": 85,
+        "status": "Available"
+    },
+    {
+        "room_number": 42,
+        "room_id": 72,
+        "amenities": ["Tea / Coffee Maker"],
+        "bed_type": "Single Bed",
+        "rate": 63,
+        "offer_price": 33,
+        "status": "Occupied"
+    },
+    {
+        "room_number": 29,
+        "room_id": 45,
+        "amenities": ["Kitchen"],
+        "bed_type": "Single Bed",
+        "rate": 48,
+        "offer_price": 81,
+        "status": "Available"
+    }
+]

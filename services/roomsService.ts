@@ -31,7 +31,6 @@ export const updateRoom = (room: Room) => {
 };
 
 export const deleteRoom = (room_id: number) => {
-  let index = roomsData.findIndex((r) => r.room_id === room_id);
   let filterRooms = roomsData.filter((b) => b.room_id != room_id);
   saveToDataBase(filterRooms, 'rooms.json');
 };
