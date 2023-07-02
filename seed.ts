@@ -1,5 +1,5 @@
 import { faker } from '@faker-js/faker';
-import { Booking, Contact, Room } from './models/interface';
+import { Booking, Contact, Room, User } from './models/interface';
 import mysql from 'mysql';
 
 let connection = mysql.createConnection({
@@ -11,7 +11,8 @@ let connection = mysql.createConnection({
 
 let randomContacts = 0;
 let randomBookings = 0;
-let randomRooms = 100;
+let randomRooms = 0;
+let randomUsers = 100;
 //Generando contacts
 console.log(`generando ${randomContacts} contactos`);
 for (let i = 0; i < randomContacts; i++) {
@@ -76,7 +77,7 @@ for (let i = 0; i < randomBookings; i++) {
   insertBooking(booking);
 }
 //Generamos rooms
-console.log(`generando ${randomRooms} rooms`);
+
 for (let i = 0; i < randomRooms; i++) {
   let room = {
     room_number: faker.number.int({ min: 1, max: 999 }),
@@ -104,6 +105,27 @@ for (let i = 0; i < randomRooms; i++) {
   } as Room;
 
   insertRoom(room);
+}
+//Generamos users
+console.log(`generando ${randomUsers} users`);
+for (let i = 0; i < randomUsers; i++) {
+  let user = {
+    contact: faker.phone.number(),
+    description: faker.lorem.text(),
+    email: faker.internet.email(),
+    id: faker.number.int({ min: 1, max: 999 }),
+    name: faker.person.fullName(),
+    startDate: faker.date
+      .between({
+        from: new Date(2022, 10 - 1, 5),
+        to: new Date(2023, 10 - 1, 5),
+      })
+      .toISOString()
+      .split('T')[0],
+    status: faker.helpers.arrayElement(['Active', 'Inactive']),
+  } as User;
+
+  insertUser(user);
 }
 //Functions
 function insertContact(data: Contact) {
@@ -155,6 +177,27 @@ function insertRoom(data: Room) {
     data.bed_type,
     data.rate,
     data.offer_price,
+    data.status,
+  ];
+
+  connection.query(query, values, (error, results) => {
+    if (error) {
+      console.error('Error al ejecutar la consulta:', error);
+      console.log(data);
+      return;
+    }
+  });
+}
+function insertUser(data: User) {
+  const query =
+    'INSERT INTO users (contact, description, email,id,name,startDate,status) VALUES (?, ?, ?,?,?, ?, ?)';
+  const values = [
+    data.contact,
+    data.description,
+    data.email,
+    data.id,
+    data.name,
+    data.startDate,
     data.status,
   ];
 
