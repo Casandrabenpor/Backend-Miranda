@@ -1,5 +1,5 @@
 import { faker } from '@faker-js/faker';
-import { Booking, Contact } from './models/interface';
+import { Booking, Contact, Room } from './models/interface';
 import mysql from 'mysql';
 
 let connection = mysql.createConnection({
@@ -10,8 +10,9 @@ let connection = mysql.createConnection({
 });
 
 let randomContacts = 0;
-let randomBookings = 100;
-
+let randomBookings = 0;
+let randomRooms = 100;
+//Generando contacts
 console.log(`generando ${randomContacts} contactos`);
 for (let i = 0; i < randomContacts; i++) {
   let contact = {
@@ -30,7 +31,7 @@ for (let i = 0; i < randomContacts; i++) {
   insertContact(contact);
 }
 //Generamos bookings
-console.log(`generando ${randomBookings} bookings`);
+
 for (let i = 0; i < randomBookings; i++) {
   let booking = {
     guest: faker.person.fullName(),
@@ -74,7 +75,37 @@ for (let i = 0; i < randomBookings; i++) {
 
   insertBooking(booking);
 }
+//Generamos rooms
+console.log(`generando ${randomRooms} rooms`);
+for (let i = 0; i < randomRooms; i++) {
+  let room = {
+    room_number: faker.number.int({ min: 1, max: 999 }),
+    room_id: faker.number.int({ min: 1, max: 999 }),
+    amenities: [
+      faker.helpers.arrayElement([
+        'Recreational activities',
+        'Mini Bar / Mini Fridge',
+        'Kitchen',
+        'Tea / Coffee Maker',
+        'Swimming pool',
+        'Air Conditioner',
+        'Breakfast',
+      ]),
+    ],
+    bed_type: faker.helpers.arrayElement([
+      'Double Bed',
+      'Suite',
+      'Single Bed',
+      'Double Superior',
+    ]),
+    rate: faker.number.int({ min: 10, max: 1000 }),
+    offer_price: faker.number.int({ min: 1, max: 999 }),
+    status: faker.helpers.arrayElement(['Available', 'Occupied']),
+  } as Room;
 
+  insertRoom(room);
+}
+//Functions
 function insertContact(data: Contact) {
   const query =
     'INSERT INTO contact (order_id, date, customer,comment) VALUES (?, ?, ?,?)';
@@ -114,6 +145,28 @@ function insertBooking(data: Booking) {
   });
 }
 
+function insertRoom(data: Room) {
+  const query =
+    'INSERT INTO rooms (room_number, room_id, amenities,bed_type,rate,offer_price,status) VALUES (?, ?, ?,?,?, ?, ?)';
+  const values = [
+    data.room_number,
+    data.room_id,
+    data.amenities[0],
+    data.bed_type,
+    data.rate,
+    data.offer_price,
+    data.status,
+  ];
+
+  connection.query(query, values, (error, results) => {
+    if (error) {
+      console.error('Error al ejecutar la consulta:', error);
+      console.log(data);
+      return;
+    }
+  });
+}
+//function time
 function getTime(date: Date): string {
   return date.getHours() + ':' + date.getMinutes();
 }
