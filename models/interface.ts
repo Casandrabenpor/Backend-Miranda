@@ -9,6 +9,7 @@ export interface User {
   status: string;
 }
 export interface Booking {
+  room_id: number;
   guest: string;
   id: string;
   order_date: string;
@@ -21,12 +22,14 @@ export interface Booking {
   status: string;
 }
 export interface Contact {
+  id: string;
   order_id: string;
   date: string;
   customer: string;
   comment: string;
 }
 export interface Room {
+  id: number;
   room_number: number;
   room_id: number;
   amenities: [string];

@@ -12,12 +12,14 @@ let connection = mysql.createConnection({
 
 let randomContacts = 0;
 let randomBookings = 0;
-let randomRooms = 0;
-let randomUsers = 20;
+let randomRooms = 20;
+let randomUsers = 0;
 //Generando contacts
 console.log(`generando ${randomContacts} contactos`);
 for (let i = 0; i < randomContacts; i++) {
   let contact = {
+    id: faker.number.int({ min: 100, max: 999 }).toString(),
+
     order_id: faker.string.numeric({ length: 10 }),
     date: faker.date
       .between({
@@ -36,6 +38,7 @@ for (let i = 0; i < randomContacts; i++) {
 
 for (let i = 0; i < randomBookings; i++) {
   let booking = {
+    room_id: faker.number.int({ min: 1, max: 999 }),
     guest: faker.person.fullName(),
     id: faker.string.numeric({ length: 10 }),
     order_date: faker.date
@@ -81,6 +84,7 @@ for (let i = 0; i < randomBookings; i++) {
 
 for (let i = 0; i < randomRooms; i++) {
   let room = {
+    id: faker.number.int({ min: 1, max: 999 }),
     room_number: faker.number.int({ min: 1, max: 999 }),
     room_id: faker.number.int({ min: 1, max: 999 }),
     amenities: [
@@ -132,8 +136,14 @@ for (let i = 0; i < randomUsers; i++) {
 //Functions
 function insertContact(data: Contact) {
   const query =
-    'INSERT INTO contact (order_id, date, customer,comment) VALUES (?, ?, ?,?)';
-  const values = [data.order_id, data.date, data.customer, data.comment];
+    'INSERT INTO contact (id,order_id, date, customer,comment) VALUES (?,?, ?, ?,?)';
+  const values = [
+    data.order_id,
+    data.order_id,
+    data.date,
+    data.customer,
+    data.comment,
+  ];
 
   connection.query(query, values, (error, results) => {
     if (error) {
@@ -145,9 +155,10 @@ function insertContact(data: Contact) {
 }
 function insertBooking(data: Booking) {
   const query =
-    'INSERT INTO bookings (guest,id,order_date,check_in,check_in_hour,check_out,check_out_hour,room_type,room_number,status) ' +
-    'VALUES (?, ?, ?,?,?, ?, ?,?,?,?)';
+    'INSERT INTO bookings (room_id,guest,id,order_date,check_in,check_in_hour,check_out,check_out_hour,room_type,room_number,status) ' +
+    'VALUES (?, ?, ?,?,?, ?,?, ?,?,?,?)';
   const values = [
+    data.room_id,
     data.guest,
     data.id,
     data.order_date,
@@ -171,8 +182,9 @@ function insertBooking(data: Booking) {
 
 function insertRoom(data: Room) {
   const query =
-    'INSERT INTO rooms (room_number, room_id, amenities,bed_type,rate,offer_price,status) VALUES (?, ?, ?,?,?, ?, ?)';
+    'INSERT INTO rooms (id,room_number, room_id, amenities,bed_type,rate,offer_price,status) VALUES (?,?, ?, ?,?,?, ?, ?)';
   const values = [
+    data.id,
     data.room_number,
     data.room_id,
     data.amenities[0],
@@ -212,6 +224,21 @@ function insertUser(data: User) {
     }
   });
 }
+
+// Realizar la consulta con INNER JOIN
+const query = `
+  SELECT *
+  FROM bookings
+  INNER JOIN rooms ON bookings.room_id = rooms.room_id
+`;
+connection.query(query, (error, results) => {
+  if (error) {
+    console.error('Error al ejecutar la consulta:', error);
+    return;
+  }
+
+  console.log('Resultado del INNER JOIN:', results);
+});
 //function time
 function getTime(date: Date): string {
   return date.getHours() + ':' + date.getMinutes();
