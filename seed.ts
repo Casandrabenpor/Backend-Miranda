@@ -1,6 +1,7 @@
 import { faker } from '@faker-js/faker';
 import { Booking, Contact, Room, User } from './models/interface';
 import mysql from 'mysql';
+import { hashPassword } from './util/hashPassword';
 
 let connection = mysql.createConnection({
   host: 'localhost',
@@ -12,7 +13,7 @@ let connection = mysql.createConnection({
 let randomContacts = 0;
 let randomBookings = 0;
 let randomRooms = 0;
-let randomUsers = 100;
+let randomUsers = 20;
 //Generando contacts
 console.log(`generando ${randomContacts} contactos`);
 for (let i = 0; i < randomContacts; i++) {
@@ -113,6 +114,7 @@ for (let i = 0; i < randomUsers; i++) {
     contact: faker.phone.number(),
     description: faker.lorem.text(),
     email: faker.internet.email(),
+    password: faker.internet.password(),
     id: faker.number.int({ min: 1, max: 999 }),
     name: faker.person.fullName(),
     startDate: faker.date
@@ -190,11 +192,12 @@ function insertRoom(data: Room) {
 }
 function insertUser(data: User) {
   const query =
-    'INSERT INTO users (contact, description, email,id,name,startDate,status) VALUES (?, ?, ?,?,?, ?, ?)';
+    'INSERT INTO users (contact, description, email,password,id,name,startDate,status) VALUES (?,?, ?, ?,?,?, ?, ?)';
   const values = [
     data.contact,
     data.description,
     data.email,
+    hashPassword(data.password),
     data.id,
     data.name,
     data.startDate,

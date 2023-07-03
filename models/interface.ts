@@ -2,6 +2,7 @@ export interface User {
   contact: string;
   description: string;
   email: string;
+  password: string;
   id: number;
   name: string;
   startDate: string;
