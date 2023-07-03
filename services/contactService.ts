@@ -1,44 +1,90 @@
-import contactData from '../data/contact.json';
 import { Contact } from '../models/interface';
-import { saveToDataBase } from './dataBaseService';
+import mysql from 'mysql2/promise';
 
-export const getContact = () => {
-  return contactData;
-};
-export const getById = (contactId: string) => {
-  const booking = contactData.find((c) => c.order_id === contactId) || null;
-  return booking;
-};
-export const addContact = (contact: Contact) => {
-  contactData.push(contact);
-  saveToDataBase(contactData, 'contact.json');
-};
-// export const updateContact = (contact: Contact) => {
-//   let index = contactData.findIndex((c) => c.order_id === contact.order_id);
-//   contactData[index] = contact;
-//   saveToDataBase(contactData, 'contact.json');
-// };
+export const getContact = async () => {
+  const query = 'SELECT id,order_id,date,customer,comment from contact;';
+  let connection = await mysql.createConnection({
+    host: 'localhost',
+    user: 'root',
+    password: process.env.DB_PASSWORD,
+    database: 'hotel_miranda',
+  });
 
-export const updateContact = (contact: Contact) => {
-  const existingContact = contactData.find(
-    (c) => c.order_id === contact.order_id,
-  );
+  const [rows] = await connection.execute(query);
 
-  if (existingContact) {
-    // Crear una copia de la reserva existente sin modificar el ID
-    const updateContact: Contact = {
-      ...contact,
-      order_id: existingContact.order_id
-        ? existingContact.order_id.toString()
-        : '', // Convertir el ID a string si existe, de lo contrario, asignar una cadena vacía
-    };
+  await connection.end();
 
-    let index = contactData.findIndex((c) => c.order_id === contact.order_id);
-    contactData[index] = updateContact;
-    saveToDataBase(contactData, 'contact.json');
-  }
+  return rows;
 };
-export const deleteContact = (order_id: string) => {
-  let filterContacts = contactData.filter((c) => c.order_id != order_id);
-  saveToDataBase(filterContacts, 'contact.json');
+export const getById = async (contactId: string) => {
+  const query =
+    'SELECT id,order_id,date,customer,comment from contact WHERE id = ?;';
+  const params = [contactId];
+
+  let connection = await mysql.createConnection({
+    host: 'localhost',
+    user: 'root',
+    password: process.env.DB_PASSWORD,
+    database: 'hotel_miranda',
+  });
+
+  const [rows] = await connection.execute(query, params);
+
+  let contact = rows as any[];
+
+  await connection.end();
+
+  return contact[0];
+};
+export const addContact = async (contact: Contact) => {
+  const query =
+    'INSERT INTO contact(order_id,date,customer,comment) VALUES (?,?,?,?)';
+  const params = [
+    contact.order_id,
+    contact.date,
+    contact.customer,
+    contact.comment,
+  ];
+  let connection = await mysql.createConnection({
+    host: 'localhost',
+    user: 'root',
+    password: process.env.DB_PASSWORD,
+    database: 'hotel_miranda',
+  });
+
+  await connection.execute(query, params);
+};
+
+export const updateContact = async (contact: Contact) => {
+  const query =
+    'UPDATE contact ' +
+    'SET order_id = ?, date = ?, customer = ?, comment = ? WHERE id = ? ';
+  const params = [
+    contact.order_id,
+    contact.date,
+    contact.customer,
+    contact.comment,
+    contact.id,
+  ];
+  let connection = await mysql.createConnection({
+    host: 'localhost',
+    user: 'root',
+    password: process.env.DB_PASSWORD,
+    database: 'hotel_miranda',
+  });
+
+  await connection.execute(query, params);
+};
+export const deleteContact = async (order_id: string) => {
+  const query = 'DELETE FROM contact WHERE id = ?';
+  const params = [order_id];
+
+  let connection = await mysql.createConnection({
+    host: 'localhost',
+    user: 'root',
+    password: process.env.DB_PASSWORD,
+    database: 'hotel_miranda',
+  });
+
+  await connection.execute(query, params);
 };
