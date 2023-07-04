@@ -40,7 +40,9 @@ export const getById = async (bookingId: string) => {
 
 export const addBooking = async (booking: Booking) => {
   const query =
-    'INSERT INTO bookings (guest,order_date,check_in,check_in_hour,check_out,check_out_hour,room_type,room_number,status,room_id) VALUES (?,?,?,?,?,?,?,?,?,?)';
+    'INSERT INTO bookings (guest, order_date, check_in, check_in_hour, check_out, check_out_hour, room_type, room_number, status, room_id) ' +
+    'VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)';
+
   const params = [
     booking.guest,
     booking.order_date,

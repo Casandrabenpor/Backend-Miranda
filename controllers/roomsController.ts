@@ -10,12 +10,13 @@ import bodyParser from 'body-parser';
 
 export const roomsController = Router();
 
-roomsController.get('', (req, res) => {
-  res.status(200).json(getRoom());
+roomsController.get('/', async (req, res) => {
+  let rooms = await getRoom();
+  res.status(200).json(rooms);
 });
-roomsController.get('/:id', (req, res) => {
+roomsController.get('/:id', async (req, res) => {
   const roomId = parseInt(req.params.id);
-  const room = getById(roomId);
+  const room = await getById(roomId);
   if (room !== null) {
     res.status(200).json(room);
   } else {
@@ -23,15 +24,15 @@ roomsController.get('/:id', (req, res) => {
   }
 });
 
-roomsController.post('', bodyParser.json(), (req, res) => {
+roomsController.post('/', bodyParser.json(), async (req, res) => {
   res.status(200).json(addRoom(req.body));
 });
 
-roomsController.put('', bodyParser.json(), (req, res) => {
+roomsController.put('/', bodyParser.json(), async (req, res) => {
   res.status(200).json(updateRoom(req.body));
 });
 
-roomsController.delete('', (req, res) => {
+roomsController.delete('/', async (req, res) => {
   let id = parseInt(req.query.id as string);
   res.status(200).json(deleteRoom(id));
 });
