@@ -62,7 +62,6 @@ export const addBooking = async (booking: Booking) => {
     database: 'hotel_miranda',
   });
   await connection.execute(query, params);
-  console.log(addBooking);
 };
 
 export const updateBooking = async (booking: Booking) => {
