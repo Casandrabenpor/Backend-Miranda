@@ -10,9 +10,9 @@ let connection = mysql.createConnection({
   database: 'hotel_miranda',
 });
 
-let randomContacts = 0;
-let randomBookings = 0;
-let randomRooms = 0;
+let randomContacts = 20;
+let randomBookings = 20;
+let randomRooms = 20;
 let randomUsers = 20;
 //Generando contacts
 console.log(`generando ${randomContacts} contactos`);

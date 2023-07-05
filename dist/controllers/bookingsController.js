@@ -8,12 +8,13 @@ const express_1 = require("express");
 const bookingsService_1 = require("../services/bookingsService");
 const body_parser_1 = __importDefault(require("body-parser"));
 exports.bookingsController = (0, express_1.Router)();
-exports.bookingsController.get('/', (req, res) => {
-    res.status(200).json((0, bookingsService_1.getBooking)());
+exports.bookingsController.get('/', async (req, res) => {
+    let bookings = await (0, bookingsService_1.getBooking)();
+    res.status(200).json(bookings);
 });
-exports.bookingsController.get('/:id', (req, res) => {
+exports.bookingsController.get('/:id', async (req, res) => {
     const bookingId = req.params.id;
-    const booking = (0, bookingsService_1.getById)(bookingId);
+    const booking = await (0, bookingsService_1.getById)(bookingId);
     if (booking !== null) {
         res.status(200).json(booking);
     }
@@ -21,13 +22,13 @@ exports.bookingsController.get('/:id', (req, res) => {
         res.status(404).json({ message: 'Booking not found' });
     }
 });
-exports.bookingsController.post('/', body_parser_1.default.json(), (req, res) => {
+exports.bookingsController.post('/', body_parser_1.default.json(), async (req, res) => {
     res.status(200).json((0, bookingsService_1.addBooking)(req.body));
 });
-exports.bookingsController.put('/', body_parser_1.default.json(), (req, res) => {
+exports.bookingsController.put('/', body_parser_1.default.json(), async (req, res) => {
     res.status(200).json((0, bookingsService_1.updateBooking)(req.body));
 });
-exports.bookingsController.delete('/', (req, res) => {
+exports.bookingsController.delete('/', async (req, res) => {
     let id = req.query.id;
     res.status(200).json((0, bookingsService_1.deleteBooking)(id));
 });

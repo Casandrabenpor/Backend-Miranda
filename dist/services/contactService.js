@@ -4,45 +4,80 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.deleteContact = exports.updateContact = exports.addContact = exports.getById = exports.getContact = void 0;
-const contact_json_1 = __importDefault(require("../data/contact.json"));
-const dataBaseService_1 = require("./dataBaseService");
-const getContact = () => {
-    return contact_json_1.default;
+const promise_1 = __importDefault(require("mysql2/promise"));
+const getContact = async () => {
+    const query = 'SELECT id,order_id,date,customer,comment from contact;';
+    let connection = await promise_1.default.createConnection({
+        host: 'localhost',
+        user: 'root',
+        password: process.env.DB_PASSWORD,
+        database: 'hotel_miranda',
+    });
+    const [rows] = await connection.execute(query);
+    await connection.end();
+    return rows;
 };
 exports.getContact = getContact;
-const getById = (contactId) => {
-    const booking = contact_json_1.default.find((c) => c.order_id === contactId) || null;
-    return booking;
+const getById = async (contactId) => {
+    const query = 'SELECT id,order_id,date,customer,comment from contact WHERE id = ?;';
+    const params = [contactId];
+    let connection = await promise_1.default.createConnection({
+        host: 'localhost',
+        user: 'root',
+        password: process.env.DB_PASSWORD,
+        database: 'hotel_miranda',
+    });
+    const [rows] = await connection.execute(query, params);
+    let contact = rows;
+    await connection.end();
+    return contact[0];
 };
 exports.getById = getById;
-const addContact = (contact) => {
-    contact_json_1.default.push(contact);
-    (0, dataBaseService_1.saveToDataBase)(contact_json_1.default, 'contact.json');
+const addContact = async (contact) => {
+    const query = 'INSERT INTO contact(order_id,date,customer,comment) VALUES (?,?,?,?)';
+    const params = [
+        contact.order_id,
+        contact.date,
+        contact.customer,
+        contact.comment,
+    ];
+    let connection = await promise_1.default.createConnection({
+        host: 'localhost',
+        user: 'root',
+        password: process.env.DB_PASSWORD,
+        database: 'hotel_miranda',
+    });
+    await connection.execute(query, params);
 };
 exports.addContact = addContact;
-// export const updateContact = (contact: Contact) => {
-//   let index = contactData.findIndex((c) => c.order_id === contact.order_id);
-//   contactData[index] = contact;
-//   saveToDataBase(contactData, 'contact.json');
-// };
-const updateContact = (contact) => {
-    const existingContact = contact_json_1.default.find((c) => c.order_id === contact.order_id);
-    if (existingContact) {
-        // Crear una copia de la reserva existente sin modificar el ID
-        const updateContact = {
-            ...contact,
-            order_id: existingContact.order_id
-                ? existingContact.order_id.toString()
-                : '', // Convertir el ID a string si existe, de lo contrario, asignar una cadena vacía
-        };
-        let index = contact_json_1.default.findIndex((c) => c.order_id === contact.order_id);
-        contact_json_1.default[index] = updateContact;
-        (0, dataBaseService_1.saveToDataBase)(contact_json_1.default, 'contact.json');
-    }
+const updateContact = async (contact) => {
+    const query = 'UPDATE contact ' +
+        'SET order_id = ?, date = ?, customer = ?, comment = ? WHERE id = ? ';
+    const params = [
+        contact.order_id,
+        contact.date,
+        contact.customer,
+        contact.comment,
+        contact.id,
+    ];
+    let connection = await promise_1.default.createConnection({
+        host: 'localhost',
+        user: 'root',
+        password: process.env.DB_PASSWORD,
+        database: 'hotel_miranda',
+    });
+    await connection.execute(query, params);
 };
 exports.updateContact = updateContact;
-const deleteContact = (order_id) => {
-    let filterContacts = contact_json_1.default.filter((c) => c.order_id != order_id);
-    (0, dataBaseService_1.saveToDataBase)(filterContacts, 'contact.json');
+const deleteContact = async (order_id) => {
+    const query = 'DELETE FROM contact WHERE id = ?';
+    const params = [order_id];
+    let connection = await promise_1.default.createConnection({
+        host: 'localhost',
+        user: 'root',
+        password: process.env.DB_PASSWORD,
+        database: 'hotel_miranda',
+    });
+    await connection.execute(query, params);
 };
 exports.deleteContact = deleteContact;

@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Servidor: 127.0.0.1
--- Tiempo de generación: 01-07-2023 a las 12:03:20
+-- Tiempo de generación: 05-07-2023 a las 11:30:26
 -- Versión del servidor: 10.4.25-MariaDB
 -- Versión de PHP: 8.1.10
 
@@ -28,62 +28,138 @@ SET time_zone = "+00:00";
 --
 
 CREATE TABLE `bookings` (
-  `guest` varchar(50) NOT NULL,
   `id` int(11) NOT NULL,
+  `guest` varchar(50) NOT NULL,
   `order_date` datetime NOT NULL,
   `check_in` date NOT NULL,
   `check_in_hour` time NOT NULL,
   `check_out` date NOT NULL,
   `check_out_hour` time NOT NULL,
-  `room_type` varchar(50) NOT NULL,
+  `room_type` enum('Suite','Double bed','Single bed','Double Superior') NOT NULL,
   `room_number` int(11) NOT NULL,
-  `status` enum('Check In','In Progress','Check Out') NOT NULL
+  `status` enum('Check In','In Progress','Check Out') NOT NULL,
+  `room_id` int(11) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
--- --------------------------------------------------------
-
 --
--- Estructura de tabla para la tabla `contact`
+-- Volcado de datos para la tabla `bookings`
 --
 
-CREATE TABLE `contact` (
-  `order_id` bigint(20) NOT NULL,
-  `date` date NOT NULL,
-  `customer` varchar(50) NOT NULL,
-  `comment` text NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
-
--- --------------------------------------------------------
-
---
--- Estructura de tabla para la tabla `rooms`
---
-
-CREATE TABLE `rooms` (
-  `room_number` int(11) NOT NULL,
-  `room_id` int(11) NOT NULL,
-  `amenities` varchar(500) NOT NULL,
-  `bed_type` varchar(50) NOT NULL,
-  `rate` int(11) NOT NULL,
-  `offer_price` int(11) NOT NULL,
-  `status` enum('Occupied','Available') NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
-
--- --------------------------------------------------------
-
---
--- Estructura de tabla para la tabla `users`
---
-
-CREATE TABLE `users` (
-  `contact` varchar(50) NOT NULL,
-  `description` text NOT NULL,
-  `email` varchar(50) NOT NULL,
-  `id` int(20) NOT NULL,
-  `name` varchar(50) NOT NULL,
-  `startDate` date NOT NULL,
-  `status` enum('active','inactive') NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+INSERT INTO `bookings` (`id`, `guest`, `order_date`, `check_in`, `check_in_hour`, `check_out`, `check_out_hour`, `room_type`, `room_number`, `status`, `room_id`) VALUES
+(1, 'Traci Crist', '2023-09-27 15:06:07', '2023-04-15', '22:03:00', '2023-09-09', '05:13:00', 'Single bed', 733, 'Check Out', 82),
+(2, 'dddddddddddd', '2023-05-12 00:00:00', '2023-05-20', '05:30:00', '2023-10-05', '10:32:00', 'Single bed', 50, 'In Progress', 500),
+(3, 'Henry Price-Schowalter', '2023-02-23 22:48:57', '2022-10-15', '08:29:00', '2023-01-04', '10:32:00', 'Single bed', 306, 'Check In', 587),
+(4, 'Gayle Hayes', '2022-10-07 00:52:52', '2023-01-09', '04:04:00', '2023-09-25', '15:17:00', 'Single bed', 978, 'In Progress', 467),
+(5, 'Bobbie Borer', '2023-01-30 09:14:25', '2023-09-19', '05:39:00', '2022-10-07', '10:27:00', 'Single bed', 136, 'In Progress', 234),
+(6, 'Reginald Price', '2023-08-16 11:01:26', '2023-02-18', '23:49:00', '2022-10-20', '04:17:00', 'Double bed', 186, 'Check In', 827),
+(7, 'Ed Herman', '2022-12-03 02:37:51', '2022-12-25', '20:10:00', '2023-01-08', '15:01:00', 'Suite', 392, 'In Progress', 908),
+(8, 'Sherman Hickle', '2022-10-20 02:21:10', '2023-08-17', '17:48:00', '2023-05-21', '14:58:00', 'Single bed', 468, 'In Progress', 810),
+(9, 'Judith Kuhic', '2023-06-30 15:41:27', '2022-12-26', '10:39:00', '2023-06-19', '15:47:00', 'Double bed', 484, 'In Progress', 135),
+(10, 'Rafael Halvorson', '2023-07-11 17:09:54', '2022-12-24', '10:57:00', '2023-08-18', '19:35:00', 'Single bed', 452, 'In Progress', 775),
+(11, 'Myron Breitenberg', '2023-09-24 06:45:31', '2022-12-23', '20:36:00', '2023-09-04', '22:03:00', 'Suite', 612, 'Check In', 486),
+(12, 'aaa ', '2022-11-27 13:51:05', '2023-04-20', '22:26:00', '2023-04-17', '10:51:00', 'Double Superior', 865, 'In Progress', 945),
+(13, 'Theodore O\'Kon', '2023-08-22 08:27:40', '2023-03-04', '14:09:00', '2023-04-23', '02:00:00', 'Suite', 684, 'In Progress', 220),
+(14, 'Leona Swift', '2023-06-27 01:48:32', '2023-06-02', '09:18:00', '2022-11-27', '14:58:00', 'Suite', 366, 'Check In', 908),
+(15, 'Amos Murazik', '2023-08-12 03:38:20', '2023-05-30', '20:32:00', '2023-08-15', '20:58:00', 'Double bed', 517, 'Check Out', 85),
+(16, 'Erick Rolfson', '2023-02-15 02:48:51', '2023-06-14', '00:25:00', '2023-06-05', '12:20:00', 'Double Superior', 123, 'In Progress', 12),
+(17, 'Ignacio Satterfield', '2022-12-28 05:20:06', '2023-08-31', '16:44:00', '2022-10-14', '20:16:00', 'Double bed', 808, 'In Progress', 396),
+(18, 'Angelina Kilback', '2023-03-12 02:59:22', '2023-04-20', '12:28:00', '2023-03-24', '20:30:00', 'Double Superior', 149, 'Check Out', 450),
+(19, 'Rachael Franecki', '2023-05-11 12:16:18', '2023-07-10', '18:21:00', '2023-04-19', '17:07:00', 'Single bed', 156, 'Check Out', 60),
+(20, 'Peter Sipes Sr.', '2023-01-27 03:56:58', '2023-09-18', '11:33:00', '2023-03-21', '22:10:00', 'Double Superior', 916, 'In Progress', 601),
+(22, 'Celia Thiel', '2023-02-21 22:10:43', '2023-06-14', '21:42:00', '2023-04-27', '08:45:00', 'Single bed', 614, 'Check In', 165),
+(23, 'Jackie Carter', '2022-11-14 12:48:25', '2023-03-20', '10:56:00', '2022-10-15', '20:02:00', 'Suite', 794, 'Check In', 105),
+(24, 'Elsie Anderson', '2023-07-14 06:17:13', '2023-03-23', '08:30:00', '2023-09-20', '16:12:00', 'Double bed', 985, 'Check In', 663),
+(25, 'Nora D\'Amore', '2023-01-14 22:11:06', '2023-07-23', '04:40:00', '2023-03-26', '16:42:00', 'Suite', 437, 'Check In', 48),
+(26, 'Daniel Smith', '2023-03-02 02:31:11', '2023-09-09', '22:24:00', '2023-09-10', '21:40:00', 'Suite', 767, 'In Progress', 3),
+(27, 'Charlene Fritsch Sr.', '2023-05-31 09:06:27', '2023-01-23', '05:09:00', '2022-12-26', '23:19:00', 'Suite', 620, 'Check In', 355),
+(28, 'Sherry Jerde', '2022-11-10 03:51:35', '2023-07-10', '17:52:00', '2023-09-28', '20:10:00', 'Double Superior', 323, 'In Progress', 799),
+(29, 'Carl Haag', '2023-05-08 09:48:05', '2023-05-28', '11:01:00', '2023-04-18', '05:56:00', 'Double bed', 383, 'In Progress', 529),
+(30, 'Jean Hayes', '2022-12-12 16:57:04', '2023-02-07', '01:25:00', '2023-08-11', '04:47:00', 'Double Superior', 986, 'In Progress', 215),
+(31, 'Mr. Tim Fritsch', '2022-10-28 16:38:51', '2023-09-28', '13:52:00', '2023-02-02', '09:07:00', 'Suite', 174, 'In Progress', 101),
+(32, 'Henry Rau', '2023-04-10 02:29:06', '2022-11-25', '03:06:00', '2023-02-02', '09:09:00', 'Single bed', 443, 'Check In', 654),
+(33, 'Tim Beer', '2023-03-06 21:38:20', '2023-02-07', '04:55:00', '2022-10-31', '18:13:00', 'Single bed', 296, 'Check Out', 234),
+(34, 'Mr. Rick Jacobson', '2023-04-24 07:26:03', '2023-01-14', '11:15:00', '2023-07-14', '13:15:00', 'Single bed', 365, 'In Progress', 767),
+(35, 'Keith Harris', '2023-07-02 18:23:10', '2023-08-03', '00:56:00', '2022-10-16', '11:19:00', 'Suite', 291, 'In Progress', 709),
+(36, 'Scott Hirthe', '2023-02-17 02:25:07', '2023-06-27', '00:29:00', '2023-01-14', '23:02:00', 'Double bed', 695, 'Check In', 448),
+(37, 'Dianne Haley', '2023-05-11 16:37:11', '2023-03-10', '02:28:00', '2023-07-18', '10:40:00', 'Single bed', 733, 'Check In', 318),
+(38, 'Timmy Dach', '2023-08-12 21:38:30', '2023-05-01', '18:00:00', '2023-04-09', '11:36:00', 'Single bed', 240, 'Check In', 159),
+(39, 'Mamie McCullough', '2023-06-15 11:43:33', '2023-02-20', '15:36:00', '2023-07-26', '23:52:00', 'Double bed', 350, 'Check In', 556),
+(40, 'Leigh Kilback', '2023-08-12 17:37:53', '2023-09-26', '12:16:00', '2022-11-06', '19:30:00', 'Double bed', 424, 'Check In', 4),
+(41, 'Nellie Marquardt', '2022-12-01 10:41:25', '2022-11-02', '02:15:00', '2023-04-05', '08:37:00', 'Suite', 122, 'Check In', 578),
+(42, 'Ricardo Mosciski', '2023-06-05 05:24:25', '2023-08-05', '23:54:00', '2023-05-12', '09:57:00', 'Double bed', 717, 'In Progress', 43),
+(43, 'Mrs. Sheri Will', '2022-11-07 10:28:39', '2023-03-27', '14:09:00', '2023-06-17', '04:58:00', 'Double Superior', 527, 'Check Out', 423),
+(44, 'Ronnie Labadie MD', '2023-05-19 18:32:29', '2023-08-12', '15:58:00', '2023-03-13', '13:30:00', 'Double bed', 672, 'Check Out', 90),
+(45, 'Ellen Dibbert', '2023-08-20 00:53:14', '2023-09-15', '12:17:00', '2022-10-23', '09:08:00', 'Double Superior', 493, 'In Progress', 813),
+(46, 'Denise Bradtke', '2023-03-12 01:36:51', '2022-11-12', '22:53:00', '2023-02-05', '17:36:00', 'Double bed', 352, 'Check Out', 123),
+(47, 'Alexis Smitham', '2023-05-30 09:23:47', '2023-06-07', '17:35:00', '2023-09-10', '19:55:00', 'Suite', 723, 'In Progress', 324),
+(48, 'Anne Dare III', '2023-02-22 10:05:43', '2022-11-18', '12:23:00', '2022-11-28', '03:31:00', 'Suite', 935, 'Check Out', 220),
+(49, 'Sandy Wiegand', '2022-10-12 04:31:30', '2023-03-19', '13:14:00', '2023-09-03', '23:18:00', 'Double Superior', 102, 'Check Out', 343),
+(50, 'Mr. Irvin O\'Keefe', '2023-04-26 13:06:38', '2023-07-28', '01:43:00', '2023-06-19', '03:31:00', 'Double Superior', 998, 'In Progress', 698),
+(51, 'Bobbie Abshire', '2022-12-24 02:39:27', '2023-02-08', '03:55:00', '2023-05-02', '07:23:00', 'Double bed', 835, 'Check In', 301),
+(52, 'Lynda Swift-Bechtelar', '2023-07-06 12:36:43', '2023-03-19', '21:05:00', '2023-03-07', '21:43:00', 'Double Superior', 194, 'Check In', 850),
+(53, 'Cary Bayer', '2023-07-24 12:28:19', '2023-07-04', '08:12:00', '2023-03-16', '21:02:00', 'Double Superior', 218, 'In Progress', 609),
+(54, 'Mattie Little', '2023-01-28 14:01:41', '2022-11-20', '03:10:00', '2022-10-06', '18:03:00', 'Suite', 236, 'Check In', 301),
+(55, 'Roosevelt Macejkovic', '2023-05-13 03:54:24', '2022-12-02', '11:39:00', '2022-10-07', '19:17:00', 'Double Superior', 494, 'Check Out', 223),
+(56, 'Miss Viola Schaefer', '2022-12-19 19:44:15', '2023-05-28', '03:29:00', '2023-08-03', '15:16:00', 'Double Superior', 268, 'Check In', 872),
+(57, 'Shawna Hoppe', '2022-10-10 23:02:30', '2023-05-27', '03:19:00', '2023-08-16', '01:45:00', 'Suite', 610, 'Check In', 42),
+(58, 'Mack O\'Conner IV', '2023-09-19 13:27:05', '2023-06-06', '23:07:00', '2023-03-22', '09:23:00', 'Suite', 552, 'Check In', 59),
+(59, 'Derrick Wyman', '2022-10-06 19:36:25', '2023-09-16', '02:13:00', '2023-06-07', '22:33:00', 'Double bed', 597, 'Check In', 871),
+(60, 'Corey Luettgen', '2023-06-03 03:06:12', '2022-11-24', '09:16:00', '2023-05-23', '10:57:00', 'Suite', 983, 'In Progress', 140),
+(61, 'Ada West', '2023-03-11 12:03:59', '2023-07-23', '11:01:00', '2023-02-09', '21:49:00', 'Double bed', 256, 'Check Out', 443),
+(62, 'Sandy Treutel', '2023-01-25 01:20:45', '2023-03-20', '10:30:00', '2023-08-18', '06:16:00', 'Double Superior', 415, 'Check In', 557),
+(63, 'Lula Reynolds', '2023-06-16 22:51:52', '2022-12-15', '22:15:00', '2023-02-20', '22:25:00', 'Single bed', 766, 'In Progress', 515),
+(64, 'Miss Kerry Walter', '2023-10-01 08:01:34', '2022-11-03', '08:02:00', '2023-07-18', '16:29:00', 'Double Superior', 483, 'Check Out', 747),
+(65, 'Kristi Lesch', '2023-03-05 10:20:39', '2023-02-27', '19:30:00', '2023-05-22', '18:00:00', 'Suite', 961, 'Check Out', 289),
+(66, 'Domingo Glover', '2023-09-08 14:50:02', '2023-01-13', '05:24:00', '2022-10-17', '10:38:00', 'Double Superior', 537, 'Check In', 860),
+(67, 'Nora Moore', '2023-03-24 09:25:04', '2023-03-28', '04:20:00', '2023-02-26', '09:16:00', 'Single bed', 915, 'Check In', 678),
+(68, 'Rene Wunsch', '2023-08-10 03:40:41', '2023-09-14', '04:50:00', '2023-08-15', '09:14:00', 'Double bed', 708, 'Check Out', 584),
+(69, 'Samuel Goodwin-Kuvalis', '2023-05-13 06:15:30', '2023-01-10', '08:06:00', '2023-04-17', '09:14:00', 'Double Superior', 905, 'Check Out', 519),
+(70, 'Jeannette Windler', '2022-11-30 03:53:09', '2023-04-23', '06:50:00', '2023-01-16', '18:55:00', 'Suite', 727, 'In Progress', 942),
+(71, 'Myrtle Huel', '2023-08-13 19:04:35', '2023-04-11', '18:55:00', '2023-09-18', '23:10:00', 'Suite', 290, 'Check Out', 542),
+(72, 'Cynthia Schumm-Lubowitz', '2023-03-27 23:09:48', '2022-12-29', '07:38:00', '2023-10-04', '05:06:00', 'Double Superior', 285, 'In Progress', 815),
+(73, 'Wallace Abbott III', '2023-06-28 14:32:55', '2023-03-03', '04:48:00', '2023-04-23', '01:12:00', 'Double Superior', 573, 'Check Out', 321),
+(74, 'Mrs. Candice Konopelski', '2023-08-23 02:43:03', '2023-04-29', '13:23:00', '2022-10-07', '11:37:00', 'Double bed', 428, 'In Progress', 500),
+(75, 'Noah Barton', '2023-01-26 18:21:18', '2023-07-15', '13:45:00', '2023-02-13', '19:04:00', 'Double bed', 888, 'Check In', 41),
+(76, 'Charles Herzog', '2022-12-27 19:14:02', '2023-06-27', '11:33:00', '2023-05-04', '17:30:00', 'Double bed', 178, 'In Progress', 364),
+(77, 'Roland Jenkins', '2023-02-25 08:34:57', '2022-12-16', '17:32:00', '2023-03-03', '16:25:00', 'Double Superior', 392, 'Check Out', 905),
+(78, 'Katie Bashirian DDS', '2023-01-10 09:00:30', '2023-02-12', '23:34:00', '2023-02-26', '15:22:00', 'Double bed', 726, 'Check Out', 968),
+(79, 'Dwayne Olson', '2022-11-14 07:37:01', '2023-07-19', '07:43:00', '2023-02-03', '09:50:00', 'Single bed', 117, 'Check In', 886),
+(80, 'Mr. Aubrey Sipes', '2022-12-04 15:54:42', '2023-06-25', '15:27:00', '2023-05-18', '18:46:00', 'Double Superior', 411, 'Check Out', 879),
+(81, 'Darla Pollich', '2023-03-30 13:29:36', '2023-09-15', '15:51:00', '2023-03-16', '17:47:00', 'Suite', 172, 'In Progress', 57),
+(82, 'Miss Belinda Rempel', '2023-08-27 14:40:34', '2023-06-27', '01:08:00', '2023-05-12', '07:03:00', 'Suite', 172, 'Check In', 13),
+(83, 'Eugene Effertz', '2023-07-06 00:50:33', '2022-10-24', '21:18:00', '2022-10-13', '11:50:00', 'Double Superior', 635, 'Check In', 432),
+(84, 'Forrest Schimmel', '2023-01-03 07:17:24', '2023-03-07', '20:22:00', '2023-02-17', '17:04:00', 'Single bed', 321, 'Check Out', 480),
+(85, 'Shelly Crist-Will', '2022-12-23 06:26:56', '2023-06-13', '09:05:00', '2022-11-17', '05:06:00', 'Suite', 251, 'Check Out', 440),
+(86, 'Ramona Larkin', '2023-05-21 16:08:41', '2023-09-04', '18:50:00', '2023-06-02', '09:14:00', 'Double Superior', 658, 'In Progress', 826),
+(87, 'John Marvin', '2023-05-17 17:50:15', '2023-04-04', '22:09:00', '2023-09-30', '23:29:00', 'Double Superior', 645, 'In Progress', 310),
+(88, 'Mr. George Auer', '2023-02-04 03:55:28', '2023-07-25', '04:12:00', '2023-01-01', '01:05:00', 'Double bed', 324, 'Check Out', 429),
+(89, 'Miss Kathryn Goyette', '2022-11-03 19:44:51', '2022-11-15', '22:25:00', '2023-07-30', '00:39:00', 'Double Superior', 681, 'Check In', 971),
+(90, 'Sylvester Prohaska', '2023-03-31 11:20:19', '2023-06-10', '10:21:00', '2022-12-26', '20:15:00', 'Double bed', 860, 'In Progress', 369),
+(91, 'Dr. Rochelle Von', '2023-06-06 00:14:21', '2023-08-03', '11:01:00', '2022-11-11', '07:42:00', 'Double Superior', 412, 'Check Out', 717),
+(92, 'Sidney Larkin', '2023-10-03 03:18:57', '2022-11-10', '14:17:00', '2022-12-13', '15:10:00', 'Single bed', 173, 'In Progress', 741),
+(93, 'Aubrey Walsh', '2022-12-18 23:55:57', '2023-01-30', '22:50:00', '2023-06-03', '00:42:00', 'Double Superior', 677, 'Check In', 804),
+(94, 'Ramon Towne', '2023-06-09 06:43:01', '2022-10-25', '18:43:00', '2023-08-06', '05:53:00', 'Double Superior', 192, 'Check Out', 756),
+(95, 'Zachary Leannon', '2023-09-04 19:24:33', '2022-12-24', '18:16:00', '2022-11-27', '10:39:00', 'Suite', 387, 'Check In', 762),
+(96, 'Kristy Metz II', '2022-12-05 20:45:04', '2023-01-22', '09:19:00', '2022-12-14', '15:02:00', 'Double bed', 447, 'Check In', 92),
+(97, 'May Murray', '2023-04-18 08:27:43', '2022-12-08', '16:24:00', '2022-11-19', '19:46:00', 'Single bed', 372, 'In Progress', 428),
+(98, 'Aubrey Aufderhar', '2023-09-01 10:26:24', '2022-12-04', '19:28:00', '2023-02-07', '16:14:00', 'Suite', 490, 'Check In', 828),
+(99, 'Dr. Leon Murray', '2023-07-18 18:14:05', '2023-07-18', '12:31:00', '2022-10-16', '20:38:00', 'Single bed', 965, 'In Progress', 476),
+(100, 'William Watsica', '2023-06-14 14:16:58', '2023-04-14', '12:41:00', '2023-05-16', '22:49:00', 'Single bed', 233, 'In Progress', 324),
+(101, 'casandra', '2023-05-12 00:00:00', '2023-05-20', '05:30:00', '2023-10-05', '10:32:00', 'Single bed', 50, 'In Progress', 500),
+(102, 'casandra', '2023-05-12 00:00:00', '2023-05-20', '05:30:00', '2023-10-05', '10:32:00', 'Single bed', 50, 'In Progress', 500),
+(103, 'casandra', '2023-05-12 00:00:00', '2023-05-20', '05:30:00', '2023-10-05', '10:32:00', 'Single bed', 50, 'In Progress', 500),
+(104, 'casandra', '2023-05-12 00:00:00', '2023-05-20', '05:30:00', '2023-10-05', '10:32:00', 'Single bed', 50, 'In Progress', 500),
+(105, 'eeee', '2023-05-12 00:00:00', '2023-05-20', '05:30:00', '2023-10-05', '10:32:00', 'Single bed', 50, 'In Progress', 500),
+(106, 'eeee', '2023-05-12 00:00:00', '2023-05-20', '05:30:00', '2023-10-05', '10:32:00', 'Single bed', 50, 'In Progress', 500),
+(107, 'casandra', '2023-05-12 00:00:00', '2023-05-23', '05:30:00', '2023-10-05', '10:32:00', 'Single bed', 50, 'In Progress', 500),
+(108, 'casandra', '2023-05-12 00:00:00', '2023-05-23', '05:30:00', '2023-10-05', '10:32:00', 'Single bed', 50, 'In Progress', 500),
+(109, 'casandra', '2023-05-12 00:00:00', '2023-05-23', '05:30:00', '2023-10-05', '10:32:00', 'Single bed', 50, 'In Progress', 20),
+(110, 'casandra', '2023-05-12 00:00:00', '2023-05-23', '05:30:00', '2023-10-05', '10:32:00', 'Single bed', 50, 'In Progress', 20),
+(111, 'ddd', '2023-05-12 00:00:00', '2023-05-20', '05:30:00', '2023-10-05', '10:32:00', 'Single bed', 50, 'In Progress', 500),
+(112, 'ddd', '2023-05-12 00:00:00', '2023-05-20', '05:30:00', '2023-10-05', '10:32:00', 'Single bed', 50, 'In Progress', 500),
+(113, 'ddd', '2023-05-12 00:00:00', '2023-05-20', '05:30:00', '2023-10-05', '10:32:00', 'Single bed', 50, 'In Progress', 500),
+(114, 'ddd', '2023-05-12 00:00:00', '2023-05-20', '05:30:00', '2023-10-05', '10:32:00', 'Single bed', 50, 'In Progress', 500),
+(115, 'ddd', '2023-05-12 00:00:00', '2023-05-20', '05:30:00', '2023-10-05', '10:32:00', 'Single bed', 50, 'In Progress', 500);
 
 --
 -- Índices para tablas volcadas
@@ -96,22 +172,14 @@ ALTER TABLE `bookings`
   ADD PRIMARY KEY (`id`);
 
 --
--- Indices de la tabla `contact`
+-- AUTO_INCREMENT de las tablas volcadas
 --
-ALTER TABLE `contact`
-  ADD PRIMARY KEY (`order_id`);
 
 --
--- Indices de la tabla `rooms`
+-- AUTO_INCREMENT de la tabla `bookings`
 --
-ALTER TABLE `rooms`
-  ADD PRIMARY KEY (`room_id`);
-
---
--- Indices de la tabla `users`
---
-ALTER TABLE `users`
-  ADD PRIMARY KEY (`id`);
+ALTER TABLE `bookings`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=116;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
