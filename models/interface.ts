@@ -5,7 +5,7 @@ export interface User {
   password: string;
   id: number;
   name: string;
-  startDate: string;
+  startDate: Date | string;
   status: string;
 }
 export interface Booking {

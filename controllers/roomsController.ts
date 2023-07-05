@@ -25,11 +25,23 @@ roomsController.get('/:id', async (req, res) => {
 });
 
 roomsController.post('/', bodyParser.json(), async (req, res) => {
-  res.status(200).json(addRoom(req.body));
+  let response = await addRoom(req.body);
+
+  if (response) {
+    res.status(500).json(response);
+  }
+
+  res.status(200).json();
 });
 
 roomsController.put('/', bodyParser.json(), async (req, res) => {
-  res.status(200).json(updateRoom(req.body));
+  let response = await updateRoom(req.body);
+
+  if (response) {
+    res.status(500).json(response);
+  }
+
+  res.status(200).json();
 });
 
 roomsController.delete('/', async (req, res) => {

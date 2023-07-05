@@ -1,5 +1,9 @@
 import mysql from 'mysql2/promise';
 import { Booking } from '../models/interface';
+import {
+  postBookingValidator,
+  putBookingValidator,
+} from '../validators/booking';
 
 export const getBooking = async () => {
   const query =
@@ -39,6 +43,11 @@ export const getById = async (bookingId: string) => {
 };
 
 export const addBooking = async (booking: Booking) => {
+  const validation = postBookingValidator.validate(booking);
+
+  if (validation.error) {
+    return validation.error.details;
+  }
   const query =
     'INSERT INTO bookings (guest, order_date, check_in, check_in_hour, check_out, check_out_hour, room_type, room_number, status, room_id) ' +
     'VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)';
@@ -65,6 +74,11 @@ export const addBooking = async (booking: Booking) => {
 };
 
 export const updateBooking = async (booking: Booking) => {
+  const validation = putBookingValidator.validate(booking);
+
+  if (validation.error) {
+    return validation.error.details;
+  }
   const query =
     'UPDATE bookings ' +
     'SET guest = ?, order_date = ?, check_in = ?, check_in_hour = ?, check_out = ?, check_out_hour = ?, room_type = ?, room_number = ? ,status = ?, room_id = ? WHERE id = ? ';

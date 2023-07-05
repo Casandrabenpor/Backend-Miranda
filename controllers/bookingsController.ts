@@ -26,11 +26,23 @@ bookingsController.get('/:id', async (req, res) => {
 });
 
 bookingsController.post('/', bodyParser.json(), async (req, res) => {
-  res.status(200).json(addBooking(req.body));
+  let response = await addBooking(req.body);
+
+  if (response) {
+    res.status(500).json(response);
+  }
+
+  res.status(200).json();
 });
 
 bookingsController.put('/', bodyParser.json(), async (req, res) => {
-  res.status(200).json(updateBooking(req.body));
+  let response = await updateBooking(req.body);
+
+  if (response) {
+    res.status(500).json(response);
+  }
+
+  res.status(200).json();
 });
 
 bookingsController.delete('/', async (req, res) => {

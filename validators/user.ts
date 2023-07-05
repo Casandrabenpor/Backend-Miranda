@@ -13,6 +13,7 @@ export const postUserValidator = joi.object({
 });
 
 export const putUserValidator = joi.object({
+  id: joi.number().integer().positive().required(),
   contact: joi.string().max(255).optional(),
   description: joi.string().max(1000).optional(),
   email: joi.string().email().max(255).optional(),

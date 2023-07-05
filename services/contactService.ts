@@ -1,5 +1,9 @@
 import { Contact } from '../models/interface';
 import mysql from 'mysql2/promise';
+import {
+  postContactValidator,
+  putContactValidator,
+} from '../validators/contact';
 
 export const getContact = async () => {
   const query = 'SELECT id,order_id,date,customer,comment from contact;';
@@ -37,6 +41,11 @@ export const getById = async (contactId: string) => {
   return contact[0];
 };
 export const addContact = async (contact: Contact) => {
+  const validation = postContactValidator.validate(contact);
+
+  if (validation.error) {
+    return validation.error.details;
+  }
   const query =
     'INSERT INTO contact(order_id,date,customer,comment) VALUES (?,?,?,?)';
   const params = [
@@ -56,6 +65,11 @@ export const addContact = async (contact: Contact) => {
 };
 
 export const updateContact = async (contact: Contact) => {
+  const validation = putContactValidator.validate(contact);
+
+  if (validation.error) {
+    return validation.error.details;
+  }
   const query =
     'UPDATE contact ' +
     'SET order_id = ?, date = ?, customer = ?, comment = ? WHERE id = ? ';

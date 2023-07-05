@@ -26,11 +26,23 @@ usersController.get('/:id', async (req, res) => {
   }
 });
 usersController.post('', bodyParser.json(), async (req, res) => {
-  res.status(200).json(addUser(req.body));
+  let response = await addUser(req.body);
+
+  if (response) {
+    res.status(500).json(response);
+  }
+
+  res.status(200).json();
 });
 
 usersController.put('', bodyParser.json(), async (req, res) => {
-  res.status(200).json(updateUser(req.body));
+  let response = await updateUser(req.body);
+
+  if (response) {
+    res.status(500).json(response);
+  }
+
+  res.status(200).json();
 });
 
 usersController.delete('', async (req, res) => {

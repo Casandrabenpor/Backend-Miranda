@@ -24,11 +24,23 @@ contactController.get('/:id', async (req, res) => {
   }
 });
 contactController.post('', bodyParser.json(), async (req, res) => {
-  res.status(200).json(addContact(req.body));
+  let response = await addContact(req.body);
+
+  if (response) {
+    res.status(500).json(response);
+  }
+
+  res.status(200).json();
 });
 
 contactController.put('', bodyParser.json(), async (req, res) => {
-  res.status(200).json(updateContact(req.body));
+  let response = await updateContact(req.body);
+
+  if (response) {
+    res.status(500).json(response);
+  }
+
+  res.status(200).json();
 });
 
 contactController.delete('', async (req, res) => {
