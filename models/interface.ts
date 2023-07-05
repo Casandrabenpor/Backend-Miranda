@@ -12,10 +12,10 @@ export interface Booking {
   room_id: number;
   guest: string;
   id: string;
-  order_date: string;
-  check_in: string;
+  order_date: Date | string;
+  check_in: Date | string;
   check_in_hour: string;
-  check_out: string;
+  check_out: Date | string;
   check_out_hour: string;
   room_type: string;
   room_number: string;
@@ -24,7 +24,7 @@ export interface Booking {
 export interface Contact {
   id: string;
   order_id: string;
-  date: string;
+  date: Date | string;
   customer: string;
   comment: string;
 }
