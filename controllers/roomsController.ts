@@ -7,6 +7,7 @@ import {
   updateRoom,
 } from '../services/roomsService';
 import bodyParser from 'body-parser';
+import { postRoomValidator, putRoomValidator } from '../validators/room';
 
 export const roomsController = Router();
 
@@ -25,23 +26,26 @@ roomsController.get('/:id', async (req, res) => {
 });
 
 roomsController.post('/', bodyParser.json(), async (req, res) => {
+  const validation = postRoomValidator.validate(req.body);
   let response = await addRoom(req.body);
 
-  if (response) {
-    res.status(500).json(response);
+  if (validation.error) {
+    res.status(500).json(validation.error);
+  } else {
+    await addRoom(req.body);
+    res.status(200).json();
   }
-
-  res.status(200).json();
 });
 
 roomsController.put('/', bodyParser.json(), async (req, res) => {
-  let response = await updateRoom(req.body);
+  const validation = putRoomValidator.validate(req.body);
 
-  if (response) {
-    res.status(500).json(response);
+  if (validation.error) {
+    res.status(500).json(validation.error);
+  } else {
+    await updateRoom(req.body);
+    res.status(200).json();
   }
-
-  res.status(200).json();
 });
 
 roomsController.delete('/', async (req, res) => {

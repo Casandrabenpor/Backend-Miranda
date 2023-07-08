@@ -7,6 +7,10 @@ import {
   deleteContact,
   getById,
 } from '../services/contactService';
+import {
+  postContactValidator,
+  putContactValidator,
+} from '../validators/contact';
 
 export const contactController = Router();
 
@@ -24,23 +28,25 @@ contactController.get('/:id', async (req, res) => {
   }
 });
 contactController.post('', bodyParser.json(), async (req, res) => {
-  let response = await addContact(req.body);
+  const validation = postContactValidator.validate(req.body);
 
-  if (response) {
-    res.status(500).json(response);
+  if (validation.error) {
+    res.status(500).json(validation.error);
+  } else {
+    await addContact(req.body);
+    res.status(200).json();
   }
-
-  res.status(200).json();
 });
 
 contactController.put('', bodyParser.json(), async (req, res) => {
-  let response = await updateContact(req.body);
+  const validation = putContactValidator.validate(req.body);
 
-  if (response) {
-    res.status(500).json(response);
+  if (validation.error) {
+    res.status(500).json(validation.error);
+  } else {
+    await updateContact(req.body);
+    res.status(200).json();
   }
-
-  res.status(200).json();
 });
 
 contactController.delete('', async (req, res) => {

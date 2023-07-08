@@ -1,7 +1,6 @@
 import { User } from '../models/interface';
 import mysql from 'mysql2/promise';
 import { hashPassword } from '../util/hashPassword';
-import { postUserValidator, putUserValidator } from '../validators/user';
 
 export const getUser = async () => {
   const query =
@@ -41,11 +40,6 @@ export const getById = async (userId: number) => {
   return users[0];
 };
 export const addUser = async (user: User) => {
-  const validation = postUserValidator.validate(user);
-
-  if (validation.error) {
-    return validation.error.details;
-  }
   const query =
     'INSERT INTO users (contact,description,email,name,startDate,status,password) ' +
     'VALUES (?,?,?,?,?,?,?)';
@@ -70,11 +64,6 @@ export const addUser = async (user: User) => {
 };
 
 export const updateUser = async (user: User) => {
-  const validation = putUserValidator.validate(user);
-
-  if (validation.error) {
-    return validation.error.details;
-  }
   const query =
     'UPDATE users ' +
     'SET contact = ? , description = ? , email = ? , ' +

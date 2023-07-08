@@ -36,7 +36,7 @@ for (let i = 0; i < randomContacts; i++) {
 
 for (let i = 0; i < randomBookings; i++) {
   let booking = {
-    room_id: faker.number.int({ min: 1, max: 999 }),
+    room_id: faker.number.int({ min: 1, max: 20 }),
     guest: faker.person.fullName(),
     order_date: faker.date
       .between({
@@ -81,8 +81,8 @@ for (let i = 0; i < randomBookings; i++) {
 
 for (let i = 0; i < randomRooms; i++) {
   let room = {
-    room_number: faker.number.int({ min: 1, max: 999 }),
-    room_id: faker.number.int({ min: 1, max: 999 }),
+    room_number: faker.number.int({ min: 1, max: 500 }),
+    // room_id: faker.number.int({ min: 1, max: 999 }),
     amenities: [
       faker.helpers.arrayElement([
         'Recreational activities',

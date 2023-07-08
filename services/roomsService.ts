@@ -1,6 +1,5 @@
 import mysql from 'mysql2/promise';
 import { Room } from '../models/interface';
-import { postRoomValidator, putRoomValidator } from '../validators/room';
 
 export const getRoom = async () => {
   const query =
@@ -41,11 +40,6 @@ export const getById = async (roomId: number) => {
 };
 
 export const addRoom = async (room: Room) => {
-  const validation = postRoomValidator.validate(room);
-
-  if (validation.error) {
-    return validation.error.details;
-  }
   const query =
     'INSERT INTO rooms(room_number,room_id,amenities,bed_type,rate,offer_price,status) VALUES (?,?,?,?,?,?,?)';
   const params = [
@@ -68,11 +62,6 @@ export const addRoom = async (room: Room) => {
 };
 
 export const updateRoom = async (room: Room) => {
-  const validation = putRoomValidator.validate(room);
-
-  if (validation.error) {
-    return validation.error.details;
-  }
   const query =
     'UPDATE rooms ' +
     'SET room_number = ? , room_id = ? , amenities = ? , ' +
