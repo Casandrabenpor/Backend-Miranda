@@ -31,7 +31,7 @@ export interface Contact {
 export interface Room {
   id: number;
   room_number: number;
-  room_id: number;
+  // room_id: number;
   amenities: [string];
   bed_type: string;
   rate: number;

@@ -173,7 +173,7 @@ function insertRoom(data: Room) {
     'INSERT INTO rooms (room_number, room_id, amenities,bed_type,rate,offer_price,status) VALUES (?, ?, ?,?,?, ?, ?)';
   const values = [
     data.room_number,
-    data.room_id,
+    // data.room_id,
     data.amenities[0],
     data.bed_type,
     data.rate,
