@@ -1,106 +1,42 @@
 import mysql from 'mysql2/promise';
 import { Booking } from '../models/interface';
+import mongoose from 'mongoose';
+import { BookingModel } from '../mongoSchemas/bookingSchemas';
 
 export const getBooking = async () => {
-  const query =
-    'SELECT id,guest,order_date,check_in,check_in_hour,check_out,check_out_hour,room_type,room_number,status,room_id;';
-
-  let connection = await mysql.createConnection({
-    host: 'localhost',
-    user: 'root',
-    password: process.env.DB_PASSWORD,
-    database: 'hotel_miranda',
-  });
-
-  const [rows] = await connection.execute(query);
-
-  await connection.end();
-  return rows;
+  await mongoose.connect('mongodb://127.0.0.1:27017/hotelmiranda');
+  let result = await BookingModel.find();
+  await mongoose.disconnect();
+  return result;
 };
 export const getById = async (bookingId: string) => {
-  const query =
-    'SELECT id,guest,order_date,check_in,check_in_hour,check_out,check_out_hour,room_type,room_number,status,room_id from bookings WHERE id = ?;';
-  const params = [bookingId];
-
-  let connection = await mysql.createConnection({
-    host: 'localhost',
-    user: 'root',
-    password: process.env.DB_PASSWORD,
-    database: 'hotel_miranda',
-  });
-
-  const [rows] = await connection.execute(query, params);
-
-  let users = rows as any[];
-
-  await connection.end();
-
-  return users[0];
+  await mongoose.connect('mongodb://127.0.0.1:27017/hotelmiranda');
+  let result = await BookingModel.findById(bookingId);
+  await mongoose.disconnect();
+  return result;
 };
 
 export const addBooking = async (booking: Booking) => {
-  const query =
-    'INSERT INTO bookings (guest, order_date, check_in, check_in_hour, check_out, check_out_hour, room_type, room_number, status, room_id) ' +
-    'VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)';
-
-  const params = [
-    booking.guest,
-    booking.order_date,
-    booking.check_in,
-    booking.check_in_hour,
-    booking.check_out,
-    booking.check_out_hour,
-    booking.room_type,
-    booking.room_number,
-    booking.status,
-    booking.room_id,
-  ];
-  let connection = await mysql.createConnection({
-    host: 'localhost',
-    user: 'root',
-    password: process.env.DB_PASSWORD,
-    database: 'hotel_miranda',
-  });
-  await connection.execute(query, params);
+  await mongoose.connect('mongodb://127.0.0.1:27017/hotelmiranda');
+  let result = await new BookingModel(booking).save();
+  await mongoose.disconnect();
+  return result;
 };
 
 export const updateBooking = async (booking: Booking) => {
-  const query =
-    'UPDATE bookings ' +
-    'SET guest = ?, order_date = ?, check_in = ?, check_in_hour = ?, check_out = ?, check_out_hour = ?, room_type = ?, room_number = ? ,status = ?, room_id = ? WHERE id = ? ';
-  const params = [
-    booking.guest,
-    booking.order_date,
-    booking.check_in,
-    booking.check_in_hour,
-    booking.check_out,
-    booking.check_out_hour,
-    booking.room_type,
-    booking.room_number,
-    booking.status,
-    booking.room_id,
-    booking.id,
-  ];
-  let connection = await mysql.createConnection({
-    host: 'localhost',
-    user: 'root',
-    password: process.env.DB_PASSWORD,
-    database: 'hotel_miranda',
-  });
+  await mongoose.connect('mongodb://127.0.0.1:27017/hotelmiranda');
 
-  await connection.execute(query, params);
+  const bookingId = new mongoose.Types.ObjectId(booking.id); // Convertir el valor de user.id a ObjectId
+
+  const result = await BookingModel.updateOne(
+    { _id: bookingId }, // Filtro por el campo _id
+    new BookingModel(booking),
+  );
+
+  await mongoose.disconnect();
 };
 
 export const deleteBooking = async (id: string) => {
-  const query = 'DELETE FROM bookings WHERE id = ?';
-  const params = [id];
-
-  let connection = await mysql.createConnection({
-    host: 'localhost',
-    user: 'root',
-    password: process.env.DB_PASSWORD,
-    database: 'hotel_miranda',
-  });
-
-  await connection.execute(query, params);
+  await mongoose.connect('mongodb://127.0.0.1:27017/hotelmiranda');
+  await BookingModel.deleteOne({ _id: id });
 };

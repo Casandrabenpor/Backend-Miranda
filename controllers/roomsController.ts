@@ -16,7 +16,7 @@ roomsController.get('/', async (req, res) => {
   res.status(200).json(rooms);
 });
 roomsController.get('/:id', async (req, res) => {
-  const roomId = parseInt(req.params.id);
+  const roomId = req.params.id;
   const room = await getById(roomId);
   if (room !== null) {
     res.status(200).json(room);
@@ -49,6 +49,6 @@ roomsController.put('/', bodyParser.json(), async (req, res) => {
 });
 
 roomsController.delete('/', async (req, res) => {
-  let id = parseInt(req.query.id as string);
+  let id = req.query.id as string;
   res.status(200).json(deleteRoom(id));
 });

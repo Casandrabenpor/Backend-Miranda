@@ -1,90 +1,40 @@
+import mongoose from 'mongoose';
 import { Contact } from '../models/interface';
 import mysql from 'mysql2/promise';
+import { ContactModel } from '../mongoSchemas/contactSchemas';
 
 export const getContact = async () => {
-  const query = 'SELECT id,order_id,date,customer,comment from contact;';
-  let connection = await mysql.createConnection({
-    host: 'localhost',
-    user: 'root',
-    password: process.env.DB_PASSWORD,
-    database: 'hotel_miranda',
-  });
-
-  const [rows] = await connection.execute(query);
-
-  await connection.end();
-
-  return rows;
+  await mongoose.connect('mongodb://127.0.0.1:27017/hotelmiranda');
+  let result = await ContactModel.find();
+  await mongoose.disconnect();
+  return result;
 };
 export const getById = async (contactId: string) => {
-  const query =
-    'SELECT id,order_id,date,customer,comment from contact WHERE id = ?;';
-  const params = [contactId];
-
-  let connection = await mysql.createConnection({
-    host: 'localhost',
-    user: 'root',
-    password: process.env.DB_PASSWORD,
-    database: 'hotel_miranda',
-  });
-
-  const [rows] = await connection.execute(query, params);
-
-  let contact = rows as any[];
-
-  await connection.end();
-
-  return contact[0];
+  await mongoose.connect('mongodb://127.0.0.1:27017/hotelmiranda');
+  let result = await ContactModel.findById(contactId);
+  await mongoose.disconnect();
+  return result;
 };
 export const addContact = async (contact: Contact) => {
-  const query =
-    'INSERT INTO contact(order_id,date,customer,comment) VALUES (?,?,?,?)';
-  const params = [
-    contact.order_id,
-    contact.date,
-    contact.customer,
-    contact.comment,
-  ];
-  let connection = await mysql.createConnection({
-    host: 'localhost',
-    user: 'root',
-    password: process.env.DB_PASSWORD,
-    database: 'hotel_miranda',
-  });
-
-  await connection.execute(query, params);
+  await mongoose.connect('mongodb://127.0.0.1:27017/hotelmiranda');
+  let result = await new ContactModel(contact).save();
+  await mongoose.disconnect();
+  return result;
 };
 
 export const updateContact = async (contact: Contact) => {
-  const query =
-    'UPDATE contact ' +
-    'SET order_id = ?, date = ?, customer = ?, comment = ? WHERE id = ? ';
-  const params = [
-    contact.order_id,
-    contact.date,
-    contact.customer,
-    contact.comment,
-    contact.id,
-  ];
-  let connection = await mysql.createConnection({
-    host: 'localhost',
-    user: 'root',
-    password: process.env.DB_PASSWORD,
-    database: 'hotel_miranda',
-  });
+  await mongoose.connect('mongodb://127.0.0.1:27017/hotelmiranda');
 
-  await connection.execute(query, params);
+  const contactId = new mongoose.Types.ObjectId(contact.id); // Convertir el valor de user.id a ObjectId
+
+  const result = await ContactModel.updateOne(
+    { _id: contactId }, // Filtro por el campo _id
+    new ContactModel(contact),
+  );
+
+  await mongoose.disconnect();
 };
 export const deleteContact = async (order_id: string) => {
-  const query = 'DELETE FROM contact WHERE id = ?';
-  const params = [order_id];
-
-  let connection = await mysql.createConnection({
-    host: 'localhost',
-    user: 'root',
-    password: process.env.DB_PASSWORD,
-    database: 'hotel_miranda',
-  });
-
-  await connection.execute(query, params);
+  await mongoose.connect('mongodb://127.0.0.1:27017/hotelmiranda');
+  await ContactModel.deleteOne({ _id: order_id });
 };
