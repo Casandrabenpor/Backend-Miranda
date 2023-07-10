@@ -29,7 +29,7 @@ const bookingSchema = new Schema({
   },
   room_type: {
     type: String,
-    enum: ['Suite', 'Double bed', 'Single bed', 'Double Superior'],
+    enum: ['Suite', 'Double Bed', 'Single Bed', 'Double Superior'],
     required: true,
   },
   room_number: {

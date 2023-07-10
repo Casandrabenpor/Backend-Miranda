@@ -2,18 +2,16 @@ import { faker } from '@faker-js/faker';
 import { Booking, Contact, Room, User } from './models/interface';
 import mysql from 'mysql';
 import { hashPassword } from './util/hashPassword';
+import { ContactModel } from './mongoSchemas/contactSchemas';
+import { BookingModel } from './mongoSchemas/bookingSchemas';
+const mongoose = require('mongoose');
 
-let connection = mysql.createConnection({
-  host: 'localhost',
-  user: 'root',
-  password: '',
-  database: 'hotel_miranda',
-});
+mongoose.connect('mongodb://127.0.0.1:27017/hotelmiranda');
 
-let randomContacts = 20;
+let randomContacts = 0;
 let randomBookings = 20;
-let randomRooms = 20;
-let randomUsers = 20;
+let randomRooms = 0;
+let randomUsers = 0;
 //Generando contacts
 console.log(`generando ${randomContacts} contactos`);
 for (let i = 0; i < randomContacts; i++) {
@@ -71,7 +69,7 @@ for (let i = 0; i < randomBookings; i++) {
     status: faker.helpers.arrayElement([
       'Check In',
       'Check Out',
-      'In progress',
+      'In Progress',
     ]),
   } as Booking;
 
@@ -129,86 +127,72 @@ for (let i = 0; i < randomUsers; i++) {
   insertUser(user);
 }
 //Functions
-function insertContact(data: Contact) {
-  const query =
-    'INSERT INTO contact (order_id, date, customer,comment) VALUES (?, ?, ?,?)';
-  const values = [data.order_id, data.date, data.customer, data.comment];
-
-  connection.query(query, values, (error, results) => {
-    if (error) {
-      console.error('Error al ejecutar la consulta:', error);
-      console.log(data);
-      return;
-    }
+async function insertContact(data: Contact) {
+  let contact = new ContactModel({
+    comment: data.comment,
+    customer: data.customer,
+    date: data.date,
+    order_id: data.order_id,
   });
+
+  await contact.save();
 }
-function insertBooking(data: Booking) {
-  const query =
-    'INSERT INTO bookings (room_id,guest,order_date,check_in,check_in_hour,check_out,check_out_hour,room_type,room_number,status) ' +
-    'VALUES (?, ?,?,?, ?,?, ?,?,?,?)';
-  const values = [
-    data.room_id,
-    data.guest,
-    data.order_date,
-    data.check_in,
-    data.check_in_hour,
-    data.check_out,
-    data.check_out_hour,
-    data.room_type,
-    data.room_number,
-    data.status,
-  ];
-
-  connection.query(query, values, (error, results) => {
-    if (error) {
-      console.error('Error al ejecutar la consulta:', error);
-      console.log(data);
-      return;
-    }
+async function insertBooking(data: Booking) {
+  let booking = new BookingModel({
+    room_id: data.room_id,
+    guest: data.guest,
+    order_date: data.order_date,
+    check_in: data.check_in,
+    check_in_hour: data.check_in_hour,
+    check_out: data.check_out,
+    check_out_hour: data.check_out_hour,
+    room_type: data.room_type,
+    room_number: data.room_number,
+    status: data.status,
   });
+
+  await booking.save();
 }
 
 function insertRoom(data: Room) {
-  const query =
-    'INSERT INTO rooms (room_number, room_id, amenities,bed_type,rate,offer_price,status) VALUES (?, ?, ?,?,?, ?, ?)';
-  const values = [
-    data.room_number,
-    // data.room_id,
-    data.amenities[0],
-    data.bed_type,
-    data.rate,
-    data.offer_price,
-    data.status,
-  ];
-
-  connection.query(query, values, (error, results) => {
-    if (error) {
-      console.error('Error al ejecutar la consulta:', error);
-      console.log(data);
-      return;
-    }
-  });
+  // const query =
+  //   'INSERT INTO rooms (room_number, room_id, amenities,bed_type,rate,offer_price,status) VALUES (?, ?, ?,?,?, ?, ?)';
+  // const values = [
+  //   data.room_number,
+  //   // data.room_id,
+  //   data.amenities[0],
+  //   data.bed_type,
+  //   data.rate,
+  //   data.offer_price,
+  //   data.status,
+  // ];
+  // connection.query(query, values, (error, results) => {
+  //   if (error) {
+  //     console.error('Error al ejecutar la consulta:', error);
+  //     console.log(data);
+  //     return;
+  //   }
+  // });
 }
 function insertUser(data: User) {
-  const query =
-    'INSERT INTO users (contact, description, email,password,name,startDate,status) VALUES (?, ?, ?,?,?, ?, ?)';
-  const values = [
-    data.contact,
-    data.description,
-    data.email,
-    hashPassword(data.password),
-    data.name,
-    data.startDate,
-    data.status,
-  ];
-
-  connection.query(query, values, (error, results) => {
-    if (error) {
-      console.error('Error al ejecutar la consulta:', error);
-      console.log(data);
-      return;
-    }
-  });
+  // const query =
+  //   'INSERT INTO users (contact, description, email,password,name,startDate,status) VALUES (?, ?, ?,?,?, ?, ?)';
+  // const values = [
+  //   data.contact,
+  //   data.description,
+  //   data.email,
+  //   hashPassword(data.password),
+  //   data.name,
+  //   data.startDate,
+  //   data.status,
+  // ];
+  // connection.query(query, values, (error, results) => {
+  //   if (error) {
+  //     console.error('Error al ejecutar la consulta:', error);
+  //     console.log(data);
+  //     return;
+  //   }
+  // });
 }
 
 // Realizar la consulta con INNER JOIN
@@ -231,10 +215,10 @@ function getTime(date: Date): string {
 }
 
 // Cerrar la conexión cuando hayas terminado
-connection.end((error) => {
-  if (error) {
-    console.error('Error al cerrar la conexión:', error);
-    return;
-  }
-  console.log('Conexión cerrada correctamente');
-});
+// connection.end((error) => {
+//   if (error) {
+//     console.error('Error al cerrar la conexión:', error);
+//     return;
+//   }
+//   console.log('Conexión cerrada correctamente');
+// });
