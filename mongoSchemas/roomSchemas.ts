@@ -13,7 +13,7 @@ const roomSchema = new Schema({
   },
   bed_type: {
     type: String,
-    enum: ['Suite', 'Double Superior', 'Double bed', 'Single bed'],
+    enum: ['Suite', 'Double Superior', 'Double Bed', 'Single Bed'],
     required: true,
   },
   rate: {

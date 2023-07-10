@@ -1,105 +1,40 @@
 import { User } from '../models/interface';
-import mysql from 'mysql2/promise';
 import { hashPassword } from '../util/hashPassword';
+import { UserModel } from '../mongoSchemas/userSchemas';
+import mongoose from 'mongoose';
 
 export const getUser = async () => {
-  const query =
-    'SELECT id,contact,description,email,name,startDate,status from users;';
-
-  let connection = await mysql.createConnection({
-    host: 'localhost',
-    user: 'root',
-    password: process.env.DB_PASSWORD,
-    database: 'hotel_miranda',
-  });
-
-  const [rows] = await connection.execute(query);
-
-  await connection.end();
-
-  return rows;
+  await mongoose.connect('mongodb://127.0.0.1:27017/hotelmiranda');
+  let result = await UserModel.find();
+  await mongoose.disconnect();
+  return result;
 };
-export const getById = async (userId: number) => {
-  const query =
-    'SELECT id,contact,description,email,name,startDate,status from users WHERE id = ?;';
-  const params = [userId];
-
-  let connection = await mysql.createConnection({
-    host: 'localhost',
-    user: 'root',
-    password: process.env.DB_PASSWORD,
-    database: 'hotel_miranda',
-  });
-
-  const [rows] = await connection.execute(query, params);
-
-  let users = rows as any[];
-
-  await connection.end();
-
-  return users[0];
+export const getById = async (userId: string) => {
+  await mongoose.connect('mongodb://127.0.0.1:27017/hotelmiranda');
+  let result = await UserModel.findById(userId);
+  await mongoose.disconnect();
+  return result;
 };
 export const addUser = async (user: User) => {
-  const query =
-    'INSERT INTO users (contact,description,email,name,startDate,status,password) ' +
-    'VALUES (?,?,?,?,?,?,?)';
-  const params = [
-    user.contact,
-    user.description,
-    user.email,
-    user.name,
-    user.startDate,
-    user.status,
-    hashPassword(user.password),
-  ];
-
-  let connection = await mysql.createConnection({
-    host: 'localhost',
-    user: 'root',
-    password: process.env.DB_PASSWORD,
-    database: 'hotel_miranda',
-  });
-
-  await connection.execute(query, params);
+  await mongoose.connect('mongodb://127.0.0.1:27017/hotelmiranda');
+  let result = await new UserModel(user).save();
+  await mongoose.disconnect();
+  return result;
 };
 
 export const updateUser = async (user: User) => {
-  const query =
-    'UPDATE users ' +
-    'SET contact = ? , description = ? , email = ? , ' +
-    'name = ? , startDate = ? , status = ? ' +
-    'WHERE id = ?';
+  await mongoose.connect('mongodb://127.0.0.1:27017/hotelmiranda');
 
-  const params = [
-    user.contact,
-    user.description,
-    user.email,
-    user.name,
-    user.startDate,
-    user.status,
-    user.id,
-  ];
+  const userId = new mongoose.Types.ObjectId(user.id); // Convertir el valor de user.id a ObjectId
 
-  let connection = await mysql.createConnection({
-    host: 'localhost',
-    user: 'root',
-    password: process.env.DB_PASSWORD,
-    database: 'hotel_miranda',
-  });
+  const result = await UserModel.updateOne(
+    { _id: userId }, // Filtro por el campo _id
+    new UserModel(user),
+  );
 
-  await connection.execute(query, params);
+  await mongoose.disconnect();
 };
-export const deleteUser = async (id: number) => {
-  const query = 'DELETE FROM users WHERE id = ?';
-
-  const params = [id];
-
-  let connection = await mysql.createConnection({
-    host: 'localhost',
-    user: 'root',
-    password: process.env.DB_PASSWORD,
-    database: 'hotel_miranda',
-  });
-
-  await connection.execute(query, params);
+export const deleteUser = async (id: string) => {
+  await mongoose.connect('mongodb://127.0.0.1:27017/hotelmiranda');
+  await UserModel.deleteOne({ _id: id });
 };

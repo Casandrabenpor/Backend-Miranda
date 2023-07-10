@@ -3,7 +3,7 @@ export interface User {
   description: string;
   email: string;
   password: string;
-  id: number;
+  id: string;
   name: string;
   startDate: Date | string;
   status: string;

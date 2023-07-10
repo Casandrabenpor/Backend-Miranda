@@ -1,17 +1,18 @@
 import { faker } from '@faker-js/faker';
 import { Booking, Contact, Room, User } from './models/interface';
-import mysql from 'mysql';
 import { hashPassword } from './util/hashPassword';
 import { ContactModel } from './mongoSchemas/contactSchemas';
 import { BookingModel } from './mongoSchemas/bookingSchemas';
+import { RoomModel } from './mongoSchemas/roomSchemas';
+import { UserModel } from './mongoSchemas/userSchemas';
 const mongoose = require('mongoose');
 
 mongoose.connect('mongodb://127.0.0.1:27017/hotelmiranda');
 
 let randomContacts = 0;
-let randomBookings = 20;
+let randomBookings = 0;
 let randomRooms = 0;
-let randomUsers = 0;
+let randomUsers = 20;
 //Generando contacts
 console.log(`generando ${randomContacts} contactos`);
 for (let i = 0; i < randomContacts; i++) {
@@ -154,45 +155,28 @@ async function insertBooking(data: Booking) {
   await booking.save();
 }
 
-function insertRoom(data: Room) {
-  // const query =
-  //   'INSERT INTO rooms (room_number, room_id, amenities,bed_type,rate,offer_price,status) VALUES (?, ?, ?,?,?, ?, ?)';
-  // const values = [
-  //   data.room_number,
-  //   // data.room_id,
-  //   data.amenities[0],
-  //   data.bed_type,
-  //   data.rate,
-  //   data.offer_price,
-  //   data.status,
-  // ];
-  // connection.query(query, values, (error, results) => {
-  //   if (error) {
-  //     console.error('Error al ejecutar la consulta:', error);
-  //     console.log(data);
-  //     return;
-  //   }
-  // });
+async function insertRoom(data: Room) {
+  let room = new RoomModel({
+    room_number: data.room_number,
+    amenities: data.amenities[0],
+    bed_type: data.bed_type,
+    rate: data.rate,
+    offer_price: data.offer_price,
+    status: data.status,
+  });
+  await room.save();
 }
-function insertUser(data: User) {
-  // const query =
-  //   'INSERT INTO users (contact, description, email,password,name,startDate,status) VALUES (?, ?, ?,?,?, ?, ?)';
-  // const values = [
-  //   data.contact,
-  //   data.description,
-  //   data.email,
-  //   hashPassword(data.password),
-  //   data.name,
-  //   data.startDate,
-  //   data.status,
-  // ];
-  // connection.query(query, values, (error, results) => {
-  //   if (error) {
-  //     console.error('Error al ejecutar la consulta:', error);
-  //     console.log(data);
-  //     return;
-  //   }
-  // });
+async function insertUser(data: User) {
+  let user = new UserModel({
+    contact: data.contact,
+    description: data.description,
+    email: data.email,
+    password: hashPassword(data.password),
+    name: data.name,
+    startDate: data.startDate,
+    status: data.status,
+  });
+  await user.save();
 }
 
 // Realizar la consulta con INNER JOIN

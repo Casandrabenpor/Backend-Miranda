@@ -18,7 +18,7 @@ usersController.get('', async (req, res) => {
   res.status(200).json(users);
 });
 usersController.get('/:id', async (req, res) => {
-  const userId = parseInt(req.params.id);
+  const userId = req.params.id;
   const user = await getById(userId);
   if (user !== null) {
     res.status(200).json(user);
@@ -49,6 +49,6 @@ usersController.put('', bodyParser.json(), async (req, res) => {
 });
 
 usersController.delete('', async (req, res) => {
-  let id = parseInt(req.query.id as string);
+  let id = req.query.id as string;
   res.status(200).json(deleteUser(id));
 });
