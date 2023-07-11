@@ -16,7 +16,7 @@ export const postRoomValidator = joi.object({
 });
 
 export const putRoomValidator = joi.object({
-  id: joi.number().integer().positive().required(),
+  id: joi.string().max(255).required(),
   room_number: joi.number().integer().positive().optional(),
   room_id: joi.number().integer().positive().optional(),
   amenities: joi.array().items(joi.string()).max(255).optional(),

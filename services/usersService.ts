@@ -29,7 +29,7 @@ export const updateUser = async (user: User) => {
 
   const result = await UserModel.updateOne(
     { _id: userId }, // Filtro por el campo _id
-    new UserModel(user),
+    user,
   );
 
   await mongoose.disconnect();

@@ -30,7 +30,7 @@ export const updateBooking = async (booking: Booking) => {
 
   const result = await BookingModel.updateOne(
     { _id: bookingId }, // Filtro por el campo _id
-    new BookingModel(booking),
+    booking,
   );
 
   await mongoose.disconnect();

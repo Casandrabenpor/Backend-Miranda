@@ -29,7 +29,7 @@ export const updateContact = async (contact: Contact) => {
 
   const result = await ContactModel.updateOne(
     { _id: contactId }, // Filtro por el campo _id
-    new ContactModel(contact),
+    contact,
   );
 
   await mongoose.disconnect();

@@ -30,7 +30,7 @@ export const updateRoom = async (room: Room) => {
 
   const result = await RoomModel.updateOne(
     { _id: roomId }, // Filtro por el campo _id
-    new RoomModel(room),
+    room,
   );
 
   await mongoose.disconnect();

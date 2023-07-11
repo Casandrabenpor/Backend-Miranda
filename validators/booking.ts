@@ -19,7 +19,7 @@ export const postBookingValidator = joi.object({
 });
 
 export const putBookingValidator = joi.object({
-  id: joi.number().integer().positive().required(),
+  id: joi.string().max(255).required(),
   room_id: joi.number().integer().positive().optional(),
   guest: joi.string().max(255).optional(),
   order_date: joi.date().greater(currentDate).optional(),
