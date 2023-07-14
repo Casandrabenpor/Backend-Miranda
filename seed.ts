@@ -7,11 +7,13 @@ import { RoomModel } from './mongoSchemas/roomSchemas';
 import { UserModel } from './mongoSchemas/userSchemas';
 const mongoose = require('mongoose');
 
-mongoose.connect('mongodb://127.0.0.1:27017/hotelmiranda');
+// mongoose.connect('mongodb://127.0.0.1:27017/hotelmiranda');
 
-let randomContacts = 0;
-let randomBookings = 0;
-let randomRooms = 0;
+mongoose.connect('');
+
+let randomContacts = 20;
+let randomBookings = 20;
+let randomRooms = 20;
 let randomUsers = 20;
 //Generando contacts
 console.log(`generando ${randomContacts} contactos`);
@@ -35,7 +37,7 @@ for (let i = 0; i < randomContacts; i++) {
 
 for (let i = 0; i < randomBookings; i++) {
   let booking = {
-    room_id: faker.number.int({ min: 1, max: 20 }),
+    // room_id: faker.number.int({ min: 1, max: 20 }),
     guest: faker.person.fullName(),
     order_date: faker.date
       .between({

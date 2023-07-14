@@ -13,6 +13,7 @@ export const postRoomValidator = joi.object({
   rate: joi.number().integer().positive().required(),
   offer_price: joi.number().integer().positive().required(),
   status: joi.string().valid('Occupied', 'Available').required(),
+  bookings: joi.array().items(joi.string()).optional(),
 });
 
 export const putRoomValidator = joi.object({
@@ -27,4 +28,5 @@ export const putRoomValidator = joi.object({
   rate: joi.number().integer().positive().optional(),
   offer_price: joi.number().integer().positive().optional(),
   status: joi.string().valid('Occupied', 'Available').optional(),
+  bookings: joi.array().items(joi.string()).optional(),
 });

@@ -2,6 +2,7 @@ import mysql from 'mysql2/promise';
 import { Booking } from '../models/interface';
 import mongoose from 'mongoose';
 import { BookingModel } from '../mongoSchemas/bookingSchemas';
+import { RoomModel } from '../mongoSchemas/roomSchemas';
 
 export const getBooking = async () => {
   await mongoose.connect('mongodb://127.0.0.1:27017/hotelmiranda');
@@ -19,6 +20,11 @@ export const getById = async (bookingId: string) => {
 export const addBooking = async (booking: Booking) => {
   await mongoose.connect('mongodb://127.0.0.1:27017/hotelmiranda');
   let result = await new BookingModel(booking).save();
+
+  await RoomModel.updateOne(
+    { _id: new mongoose.Types.ObjectId(booking.room_id) }, // Filtro por el campo _id
+    { $push: { bookings: result._id } },
+  );
   await mongoose.disconnect();
   return result;
 };
@@ -38,5 +44,11 @@ export const updateBooking = async (booking: Booking) => {
 
 export const deleteBooking = async (id: string) => {
   await mongoose.connect('mongodb://127.0.0.1:27017/hotelmiranda');
+  let result = await BookingModel.findById(id);
+
   await BookingModel.deleteOne({ _id: id });
+  await RoomModel.updateOne(
+    { _id: result?.room_id }, // Filtro para encontrar el documento específico
+    { $pull: { bookings: id } }, // Operador $pull para eliminar el elemento del array
+  );
 };

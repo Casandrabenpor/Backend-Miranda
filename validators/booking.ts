@@ -3,7 +3,7 @@ import joi from 'joi';
 const currentDate = new Date();
 
 export const postBookingValidator = joi.object({
-  room_id: joi.number().integer().positive().required(),
+  room_id: joi.string().required(),
   guest: joi.string().max(255).required(),
   order_date: joi.date().greater(currentDate).required(),
   check_in_hour: joi.string().max(255).required(),
@@ -20,7 +20,7 @@ export const postBookingValidator = joi.object({
 
 export const putBookingValidator = joi.object({
   id: joi.string().max(255).required(),
-  room_id: joi.number().integer().positive().optional(),
+  room_id: joi.string().required(),
   guest: joi.string().max(255).optional(),
   order_date: joi.date().greater(currentDate).optional(),
   check_in_hour: joi.string().max(255).optional(),

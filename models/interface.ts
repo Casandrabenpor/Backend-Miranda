@@ -37,6 +37,7 @@ export interface Room {
   rate: number;
   offer_price: number;
   status: string;
+  bookings: [string];
 }
 export interface Login {
   name: string;

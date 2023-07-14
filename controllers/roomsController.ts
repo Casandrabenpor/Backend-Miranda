@@ -27,7 +27,6 @@ roomsController.get('/:id', async (req, res) => {
 
 roomsController.post('/', bodyParser.json(), async (req, res) => {
   const validation = postRoomValidator.validate(req.body);
-  let response = await addRoom(req.body);
 
   if (validation.error) {
     res.status(500).json(validation.error);

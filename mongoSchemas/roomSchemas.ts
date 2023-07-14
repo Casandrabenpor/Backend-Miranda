@@ -29,6 +29,9 @@ const roomSchema = new Schema({
     enum: ['Available', 'Occupied'],
     required: true,
   },
+  bookings: {
+    type: [mongoose.Types.ObjectId],
+  },
 });
 export interface MongoUser extends InferSchemaType<typeof roomSchema> {}
 
