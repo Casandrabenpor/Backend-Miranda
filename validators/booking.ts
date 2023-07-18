@@ -12,7 +12,7 @@ export const postBookingValidator = joi.object({
   check_out: joi.date().greater(currentDate).required(),
   room_type: joi
     .string()
-    .valid('Suite', 'Double Superior', 'Double bed', 'Single bed')
+    .valid('Suite', 'Double Superior', 'Double Bed', 'Single Bed')
     .required(),
   room_number: joi.number().integer().positive().required(),
   status: joi.string().valid('Check In', 'In Progress', 'Check Out').required(),
@@ -29,7 +29,7 @@ export const putBookingValidator = joi.object({
   check_out: joi.date().greater(currentDate).optional(),
   room_type: joi
     .string()
-    .valid('Suite', 'Double Superior', 'Double bed', 'Single bed')
+    .valid('Suite', 'Double Superior', 'Double Bed', 'Single Bed')
     .optional(),
   room_number: joi.number().integer().positive().optional(),
   status: joi.string().valid('Check In', 'In Progress', 'Check Out').optional(),

@@ -1,13 +1,16 @@
-import mysql from 'mysql2/promise';
 import { Booking } from '../models/interface';
-import mongoose from 'mongoose';
+import mongoose, { mongo } from 'mongoose';
 import { BookingModel } from '../mongoSchemas/bookingSchemas';
 import { RoomModel } from '../mongoSchemas/roomSchemas';
 import { connectToDb } from '../util/mongoConnector';
 
 export const getBooking = async () => {
   await connectToDb();
-  let result = await BookingModel.find();
+  let mongoResult = await BookingModel.find();
+  let result = mongoResult.map((booking) => {
+    return mapToBookingResponse(booking);
+  });
+
   return result;
 };
 export const getById = async (bookingId: string) => {
@@ -24,7 +27,7 @@ export const addBooking = async (booking: Booking) => {
     { _id: new mongoose.Types.ObjectId(booking.room_id) }, // Filtro por el campo _id
     { $push: { bookings: result._id } },
   );
-  return result;
+  return mapToBookingResponse(result);
 };
 
 export const updateBooking = async (booking: Booking) => {
@@ -48,3 +51,27 @@ export const deleteBooking = async (id: string) => {
     { $pull: { bookings: id } }, // Operador $pull para eliminar el elemento del array
   );
 };
+
+function parseDate(date: Date): string {
+  return date.toISOString().split('T')[0];
+}
+
+function parseDateTime(date: Date): string {
+  return date.toISOString().slice(0, 16);
+}
+
+function mapToBookingResponse(bookingModel: any) {
+  return {
+    check_in: parseDate(bookingModel.check_in),
+    check_in_hour: bookingModel.check_in_hour,
+    check_out: parseDate(bookingModel.check_out),
+    check_out_hour: bookingModel.check_out_hour,
+    guest: bookingModel.guest,
+    id: bookingModel._id.toString(),
+    order_date: parseDateTime(bookingModel.order_date),
+    room_id: bookingModel.room_id,
+    room_number: bookingModel.room_number,
+    room_type: bookingModel.room_type,
+    status: bookingModel.status,
+  } as Booking;
+}

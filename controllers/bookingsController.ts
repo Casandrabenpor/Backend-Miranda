@@ -35,8 +35,8 @@ bookingsController.post('/', bodyParser.json(), async (req, res) => {
   if (validation.error) {
     res.status(500).json(validation.error);
   } else {
-    await addBooking(req.body);
-    res.status(200).json();
+    let result = await addBooking(req.body);
+    res.status(200).json(result);
   }
 });
 

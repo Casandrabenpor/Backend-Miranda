@@ -6,9 +6,12 @@ import { verifyTokenMiddleware } from '../middleware/auth';
 import { contactController } from '../controllers/contactController';
 import { authenticationController } from '../controllers/authController';
 import { infoController } from '../controllers/infoController';
+import cors from 'cors';
 require('dotenv').config();
 
 export const app = express();
+// Configurar los encabezados de CORS utilizando cors()
+app.use(cors());
 
 //public routes
 app.use('/login', authenticationController);

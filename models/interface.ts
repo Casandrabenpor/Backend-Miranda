@@ -9,7 +9,7 @@ export interface User {
   status: string;
 }
 export interface Booking {
-  room_id: number;
+  room_id: string;
   guest: string;
   id: string;
   order_date: Date | string;
