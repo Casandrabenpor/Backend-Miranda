@@ -6,7 +6,10 @@ import { connectToDb } from '../util/mongoConnector';
 
 export const getUser = async () => {
   await connectToDb();
-  let result = await UserModel.find();
+  let mongoResult = await UserModel.find();
+  let result = mongoResult.map((user) => {
+    return mapToUserResponse(user);
+  });
   return result;
 };
 export const getById = async (userId: string) => {
@@ -34,3 +37,19 @@ export const deleteUser = async (id: string) => {
   await connectToDb();
   await UserModel.deleteOne({ _id: id });
 };
+
+function parseDate(date: Date): string {
+  return date.toISOString().split('T')[0];
+}
+function mapToUserResponse(userModel: any) {
+  return {
+    contact: userModel.contact,
+    description: userModel.description,
+    email: userModel.email,
+    password: userModel.password,
+    id: userModel._id.toString(),
+    name: userModel.name,
+    startDate: parseDate(userModel.startDate),
+    status: userModel.status,
+  } as User;
+}
