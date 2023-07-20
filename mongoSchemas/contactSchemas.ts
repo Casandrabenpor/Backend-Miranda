@@ -3,10 +3,6 @@ import mongoose, { InferSchemaType } from 'mongoose';
 const { Schema } = mongoose;
 
 const contactSchema = new Schema({
-  order_id: {
-    type: String,
-    required: true,
-  },
   date: {
     type: Date,
     required: true,

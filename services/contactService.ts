@@ -20,12 +20,12 @@ export const getById = async (contactId: string) => {
 export const addContact = async (contact: Contact) => {
   await connectToDb();
   let result = await new ContactModel(contact).save();
-  return result;
+  return mapToContactResponse(result);
 };
 
 export const updateContact = async (contact: Contact) => {
   await connectToDb();
-  const contactId = new mongoose.Types.ObjectId(contact.id); // Convertir el valor de user.id a ObjectId
+  const contactId = new mongoose.Types.ObjectId(contact.order_id); // Convertir el valor de user.id a ObjectId
 
   const result = await ContactModel.updateOne(
     { _id: contactId }, // Filtro por el campo _id
@@ -41,8 +41,8 @@ function parseDate(date: Date): string {
 }
 function mapToContactResponse(contactModel: any) {
   return {
-    id: contactModel._id.toString(),
-    order_id: contactModel.order_id,
+    // id: contactModel._id.toString(),
+    order_id: contactModel._id.toString(),
     date: parseDate(contactModel.date),
     customer: contactModel.customer,
     comment: contactModel.comment,
