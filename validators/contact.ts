@@ -9,7 +9,7 @@ export const postContactValidator = joi.object({
 });
 
 export const putContactValidator = joi.object({
-  order_id: joi.string().max(255).optional(),
+  contact_id: joi.string().max(255).optional(),
   date: joi.date().greater(currentDate).optional(),
   customer: joi.string().max(255).optional(),
   comment: joi.string().max(255).optional(),

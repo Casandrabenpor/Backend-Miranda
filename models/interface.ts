@@ -23,7 +23,7 @@ export interface Booking {
 }
 export interface Contact {
   id: string;
-  order_id: string;
+  contact_id: string;
   date: Date | string;
   customer: string;
   comment: string;

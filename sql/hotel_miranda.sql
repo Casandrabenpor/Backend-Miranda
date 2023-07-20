@@ -49,7 +49,7 @@ CREATE TABLE `bookings` (
 
 CREATE TABLE `contact` (
   `id` int(11) NOT NULL,
-  `order_id` bigint(20) NOT NULL,
+  `contact_id` bigint(20) NOT NULL,
   `date` date NOT NULL,
   `customer` varchar(50) NOT NULL,
   `comment` text NOT NULL

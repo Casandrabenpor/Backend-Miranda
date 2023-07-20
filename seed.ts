@@ -24,7 +24,7 @@ async function main(): Promise<void> {
   console.log(`generando ${randomContacts} contactos`);
   for (let i = 0; i < randomContacts; i++) {
     let contact = {
-      order_id: faker.string.numeric({ length: 10 }),
+      contact_id: faker.string.numeric({ length: 10 }),
       date: faker.date
         .between({
           from: new Date(),
@@ -143,7 +143,7 @@ async function main(): Promise<void> {
       comment: data.comment,
       customer: data.customer,
       date: data.date,
-      order_id: data.order_id,
+      contact_id: data.contact_id,
     });
 
     await contact.save();
