@@ -6,7 +6,7 @@ export const postUserValidator = joi.object({
   contact: joi.string().max(255).required(),
   description: joi.string().max(1000).required(),
   email: joi.string().email().max(255).required(),
-  password: joi.string().max(255).required(),
+  password: joi.string().max(255).optional(),
   name: joi.string().max(255).required(),
   startDate: joi.date().greater(currentDate).required(),
   status: joi.string().valid('Active', 'Inactive').required(),

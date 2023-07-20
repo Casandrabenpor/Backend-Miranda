@@ -20,7 +20,7 @@ export const getById = async (userId: string) => {
 export const addUser = async (user: User) => {
   await connectToDb();
   let result = await new UserModel(user).save();
-  return result;
+  return mapToUserResponse(result);
 };
 
 export const updateUser = async (user: User) => {
@@ -41,9 +41,15 @@ export const deleteUser = async (id: string) => {
 function parseDate(date: Date): string {
   return date.toISOString().split('T')[0];
 }
+function formatPhoneNumber(phoneNumber: any) {
+  const digitsOnly = phoneNumber.replace(/\D/g, ''); // Elimina todos los caracteres que no sean dígitos
+  const formatted = digitsOnly.replace(/(\d{3})(\d{3})(\d{4})/, '$1-$2-$3'); // Agrega guiones en la posición adecuada
+  return formatted;
+}
+
 function mapToUserResponse(userModel: any) {
   return {
-    contact: userModel.contact,
+    contact: formatPhoneNumber(userModel.contact),
     description: userModel.description,
     email: userModel.email,
     password: userModel.password,

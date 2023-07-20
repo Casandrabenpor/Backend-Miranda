@@ -14,9 +14,9 @@ async function main(): Promise<void> {
   );
 
   let randomContacts = 20;
-  let randomBookings = 20;
-  let randomRooms = 20;
-  let randomUsers = 20;
+  let randomBookings = 0;
+  let randomRooms = 0;
+  let randomUsers = 0;
 
   let roomIds: string[] = [];
 
@@ -27,8 +27,8 @@ async function main(): Promise<void> {
       order_id: faker.string.numeric({ length: 10 }),
       date: faker.date
         .between({
-          from: new Date(2022, 10 - 1, 5),
-          to: new Date(2023, 10 - 1, 5),
+          from: new Date(),
+          to: new Date(2030, 10 - 1, 5),
         })
         .toISOString()
         .split('T')[0],
@@ -79,14 +79,14 @@ async function main(): Promise<void> {
       order_date: faker.date
         .between({
           from: new Date(),
-          to: new Date(2025, 10 - 1, 5),
+          to: new Date(2030, 10 - 1, 5),
         })
         .toISOString()
         .replace('T', ' '),
       check_in: faker.date
         .between({
           from: new Date(),
-          to: new Date(2025, 10 - 1, 5),
+          to: new Date(2030, 10 - 1, 5),
         })
         .toISOString()
         .split('T')[0],
@@ -94,7 +94,7 @@ async function main(): Promise<void> {
       check_out: faker.date
         .between({
           from: new Date(),
-          to: new Date(2025, 10 - 1, 5),
+          to: new Date(2030, 10 - 1, 5),
         })
         .toISOString()
         .split('T')[0],
@@ -128,7 +128,7 @@ async function main(): Promise<void> {
       startDate: faker.date
         .between({
           from: new Date(),
-          to: new Date(2025, 10 - 1, 5),
+          to: new Date(2030, 10 - 1, 5),
         })
         .toISOString()
         .split('T')[0],

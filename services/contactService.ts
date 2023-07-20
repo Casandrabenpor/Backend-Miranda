@@ -6,7 +6,10 @@ import { connectToDb } from '../util/mongoConnector';
 
 export const getContact = async () => {
   await connectToDb();
-  let result = await ContactModel.find();
+  let mongoResult = await ContactModel.find();
+  let result = mongoResult.map((contact) => {
+    return mapToContactResponse(contact);
+  });
   return result;
 };
 export const getById = async (contactId: string) => {
@@ -33,3 +36,15 @@ export const deleteContact = async (order_id: string) => {
   await connectToDb();
   await ContactModel.deleteOne({ _id: order_id });
 };
+function parseDate(date: Date): string {
+  return date.toISOString().split('T')[0];
+}
+function mapToContactResponse(contactModel: any) {
+  return {
+    id: contactModel._id.toString(),
+    order_id: contactModel.order_id,
+    date: parseDate(contactModel.date),
+    customer: contactModel.customer,
+    comment: contactModel.comment,
+  } as Contact;
+}
