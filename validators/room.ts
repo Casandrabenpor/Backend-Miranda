@@ -4,7 +4,6 @@ const currentDate = new Date();
 
 export const postRoomValidator = joi.object({
   room_number: joi.number().integer().positive().required(),
-  room_id: joi.number().integer().positive().required(),
   amenities: joi.array().items(joi.string()).max(255).required(),
   bed_type: joi
     .string()
@@ -17,9 +16,8 @@ export const postRoomValidator = joi.object({
 });
 
 export const putRoomValidator = joi.object({
-  id: joi.string().max(255).required(),
   room_number: joi.number().integer().positive().optional(),
-  room_id: joi.number().integer().positive().optional(),
+  room_id: joi.string().max(255).optional(),
   amenities: joi.array().items(joi.string()).max(255).optional(),
   bed_type: joi
     .string()

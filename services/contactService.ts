@@ -19,6 +19,7 @@ export const getById = async (contactId: string) => {
 };
 export const addContact = async (contact: Contact) => {
   await connectToDb();
+  console.log(addContact);
   let result = await new ContactModel(contact).save();
   return mapToContactResponse(result);
 };

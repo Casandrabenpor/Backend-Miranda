@@ -22,26 +22,26 @@ export const getById = async (roomId: string) => {
 export const addRoom = async (room: Room) => {
   await connectToDb();
   let result = await new RoomModel(room).save();
-  return result;
+  return mapToRoomResponse(result);
 };
 
 export const updateRoom = async (room: Room) => {
   await connectToDb();
   const roomId = new mongoose.Types.ObjectId(room.room_id); // Convertir el valor de user.id a ObjectId
   const result = await RoomModel.updateOne(
-    { room_id: roomId }, // Filtro por el campo _id
+    { _id: roomId }, // Filtro por el campo _id
     room,
   );
 };
 
-export const deleteRoom = async (id: string) => {
+export const deleteRoom = async (room_id: string) => {
   await connectToDb();
-  await RoomModel.deleteOne({ _id: id });
+  await RoomModel.deleteOne({ _id: room_id });
 };
 
 function mapToRoomResponse(roomModel: any) {
   return {
-    room_id: roomModel.room_id,
+    room_id: roomModel._id.toString(),
     room_number: roomModel.room_number,
     amenities: roomModel.amenities,
     bed_type: roomModel.bed_type,
