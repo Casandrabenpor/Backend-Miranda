@@ -4,93 +4,66 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.deleteBooking = exports.updateBooking = exports.addBooking = exports.getById = exports.getBooking = void 0;
-const promise_1 = __importDefault(require("mysql2/promise"));
+const mongoose_1 = __importDefault(require("mongoose"));
+const bookingSchemas_1 = require("../mongoSchemas/bookingSchemas");
+const roomSchemas_1 = require("../mongoSchemas/roomSchemas");
+const mongoConnector_1 = require("../util/mongoConnector");
 const getBooking = async () => {
-    const query = 'SELECT id,guest,order_date,check_in,check_in_hour,check_out,check_out_hour,room_type,room_number,status,room_id;';
-    let connection = await promise_1.default.createConnection({
-        host: 'localhost',
-        user: 'root',
-        password: process.env.DB_PASSWORD,
-        database: 'hotel_miranda',
+    await (0, mongoConnector_1.connectToDb)();
+    let mongoResult = await bookingSchemas_1.BookingModel.find();
+    let result = mongoResult.map((booking) => {
+        return mapToBookingResponse(booking);
     });
-    const [rows] = await connection.execute(query);
-    await connection.end();
-    return rows;
+    return result;
 };
 exports.getBooking = getBooking;
 const getById = async (bookingId) => {
-    const query = 'SELECT id,guest,order_date,check_in,check_in_hour,check_out,check_out_hour,room_type,room_number,status,room_id from bookings WHERE id = ?;';
-    const params = [bookingId];
-    let connection = await promise_1.default.createConnection({
-        host: 'localhost',
-        user: 'root',
-        password: process.env.DB_PASSWORD,
-        database: 'hotel_miranda',
-    });
-    const [rows] = await connection.execute(query, params);
-    let users = rows;
-    await connection.end();
-    return users[0];
+    await (0, mongoConnector_1.connectToDb)();
+    let result = await bookingSchemas_1.BookingModel.findById(bookingId);
+    return result;
 };
 exports.getById = getById;
 const addBooking = async (booking) => {
-    const query = 'INSERT INTO bookings (guest, order_date, check_in, check_in_hour, check_out, check_out_hour, room_type, room_number, status, room_id) ' +
-        'VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)';
-    const params = [
-        booking.guest,
-        booking.order_date,
-        booking.check_in,
-        booking.check_in_hour,
-        booking.check_out,
-        booking.check_out_hour,
-        booking.room_type,
-        booking.room_number,
-        booking.status,
-        booking.room_id,
-    ];
-    let connection = await promise_1.default.createConnection({
-        host: 'localhost',
-        user: 'root',
-        password: process.env.DB_PASSWORD,
-        database: 'hotel_miranda',
-    });
-    await connection.execute(query, params);
+    await (0, mongoConnector_1.connectToDb)();
+    let result = await new bookingSchemas_1.BookingModel(booking).save();
+    await roomSchemas_1.RoomModel.updateOne({ _id: new mongoose_1.default.Types.ObjectId(booking.room_id) }, // Filtro por el campo _id
+    { $push: { bookings: result._id } });
+    return mapToBookingResponse(result);
 };
 exports.addBooking = addBooking;
 const updateBooking = async (booking) => {
-    const query = 'UPDATE bookings ' +
-        'SET guest = ?, order_date = ?, check_in = ?, check_in_hour = ?, check_out = ?, check_out_hour = ?, room_type = ?, room_number = ? ,status = ?, room_id = ? WHERE id = ? ';
-    const params = [
-        booking.guest,
-        booking.order_date,
-        booking.check_in,
-        booking.check_in_hour,
-        booking.check_out,
-        booking.check_out_hour,
-        booking.room_type,
-        booking.room_number,
-        booking.status,
-        booking.room_id,
-        booking.id,
-    ];
-    let connection = await promise_1.default.createConnection({
-        host: 'localhost',
-        user: 'root',
-        password: process.env.DB_PASSWORD,
-        database: 'hotel_miranda',
-    });
-    await connection.execute(query, params);
+    await (0, mongoConnector_1.connectToDb)();
+    const bookingId = new mongoose_1.default.Types.ObjectId(booking.id); // Convertir el valor de user.id a ObjectId
+    const result = await bookingSchemas_1.BookingModel.updateOne({ _id: bookingId }, // Filtro por el campo _id
+    booking);
 };
 exports.updateBooking = updateBooking;
 const deleteBooking = async (id) => {
-    const query = 'DELETE FROM bookings WHERE id = ?';
-    const params = [id];
-    let connection = await promise_1.default.createConnection({
-        host: 'localhost',
-        user: 'root',
-        password: process.env.DB_PASSWORD,
-        database: 'hotel_miranda',
-    });
-    await connection.execute(query, params);
+    await (0, mongoConnector_1.connectToDb)();
+    let result = await bookingSchemas_1.BookingModel.findById(id);
+    await bookingSchemas_1.BookingModel.deleteOne({ _id: id });
+    await roomSchemas_1.RoomModel.updateOne({ _id: result?.room_id }, // Filtro para encontrar el documento específico
+    { $pull: { bookings: id } });
 };
 exports.deleteBooking = deleteBooking;
+function parseDate(date) {
+    return date.toISOString().split('T')[0];
+}
+function parseDateTime(date) {
+    return date.toISOString().slice(0, 16);
+}
+function mapToBookingResponse(bookingModel) {
+    return {
+        check_in: parseDate(bookingModel.check_in),
+        check_in_hour: bookingModel.check_in_hour,
+        check_out: parseDate(bookingModel.check_out),
+        check_out_hour: bookingModel.check_out_hour,
+        guest: bookingModel.guest,
+        id: bookingModel._id.toString(),
+        order_date: parseDateTime(bookingModel.order_date),
+        room_id: bookingModel.room_id,
+        room_number: bookingModel.room_number,
+        room_type: bookingModel.room_type,
+        status: bookingModel.status,
+    };
+}

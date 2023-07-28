@@ -1,7 +1,9 @@
-import mongoose from 'mongoose';
+import mongoose, { mongo } from 'mongoose';
 import dotenv from 'dotenv';
 
 dotenv.config(); // Cargar variables de entorno desde el archivo .env
+
+let dbConnection: any = null;
 
 const uri =
   'mongodb+srv://casandra:' +
@@ -10,8 +12,15 @@ const uri =
 
 export async function connectToDb() {
   try {
-    await mongoose.connect(uri);
-    console.log('Conexión exitosa a la base de datos');
+    if (dbConnection == null) {
+      dbConnection = await mongoose.connect(uri, {
+        maxIdleTimeMS: 270000,
+        minPoolSize: 2,
+        maxPoolSize: 4,
+      });
+      console.log('Conexión exitosa a la base de datos');
+    }
+    return dbConnection;
   } catch (error) {
     console.error('Error al conectar a la base de datos:', error);
   }

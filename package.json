@@ -33,7 +33,7 @@
     "typescript": "^4.9.5"
   },
   "scripts": {
-    "start": "nodemon ./util/server.ts",
+    "start": "nodemon ./server.ts",
     "test": "jest",
     "build": "rimraf dist && tsc"
   }

@@ -1,93 +1,54 @@
-'use strict';
-var __importDefault =
-  (this && this.__importDefault) ||
-  function (mod) {
-    return mod && mod.__esModule ? mod : { default: mod };
-  };
-Object.defineProperty(exports, '__esModule', { value: true });
-exports.deleteContact =
-  exports.updateContact =
-  exports.addContact =
-  exports.getById =
-  exports.getContact =
-    void 0;
-const promise_1 = __importDefault(require('mysql2/promise'));
+"use strict";
+var __importDefault = (this && this.__importDefault) || function (mod) {
+    return (mod && mod.__esModule) ? mod : { "default": mod };
+};
+Object.defineProperty(exports, "__esModule", { value: true });
+exports.deleteContact = exports.updateContact = exports.addContact = exports.getById = exports.getContact = void 0;
+const mongoose_1 = __importDefault(require("mongoose"));
+const contactSchemas_1 = require("../mongoSchemas/contactSchemas");
+const mongoConnector_1 = require("../util/mongoConnector");
 const getContact = async () => {
-  const query = 'SELECT id,contact_id,date,customer,comment from contact;';
-  let connection = await promise_1.default.createConnection({
-    host: 'localhost',
-    user: 'root',
-    password: process.env.DB_PASSWORD,
-    database: 'hotel_miranda',
-  });
-  const [rows] = await connection.execute(query);
-  await connection.end();
-  return rows;
+    await (0, mongoConnector_1.connectToDb)();
+    let mongoResult = await contactSchemas_1.ContactModel.find();
+    let result = mongoResult.map((contact) => {
+        return mapToContactResponse(contact);
+    });
+    return result;
 };
 exports.getContact = getContact;
 const getById = async (contactId) => {
-  const query =
-    'SELECT id,contact_id,date,customer,comment from contact WHERE id = ?;';
-  const params = [contactId];
-  let connection = await promise_1.default.createConnection({
-    host: 'localhost',
-    user: 'root',
-    password: process.env.DB_PASSWORD,
-    database: 'hotel_miranda',
-  });
-  const [rows] = await connection.execute(query, params);
-  let contact = rows;
-  await connection.end();
-  return contact[0];
+    await (0, mongoConnector_1.connectToDb)();
+    let result = await contactSchemas_1.ContactModel.findById(contactId);
+    return result;
 };
 exports.getById = getById;
 const addContact = async (contact) => {
-  const query =
-    'INSERT INTO contact(contact_id,date,customer,comment) VALUES (?,?,?,?)';
-  const params = [
-    contact.contact_id,
-    contact.date,
-    contact.customer,
-    contact.comment,
-  ];
-  let connection = await promise_1.default.createConnection({
-    host: 'localhost',
-    user: 'root',
-    password: process.env.DB_PASSWORD,
-    database: 'hotel_miranda',
-  });
-  await connection.execute(query, params);
+    await (0, mongoConnector_1.connectToDb)();
+    let result = await new contactSchemas_1.ContactModel(contact).save();
+    return mapToContactResponse(result);
 };
 exports.addContact = addContact;
 const updateContact = async (contact) => {
-  const query =
-    'UPDATE contact ' +
-    'SET contact_id = ?, date = ?, customer = ?, comment = ? WHERE id = ? ';
-  const params = [
-    contact.contact_id,
-    contact.date,
-    contact.customer,
-    contact.comment,
-    contact.id,
-  ];
-  let connection = await promise_1.default.createConnection({
-    host: 'localhost',
-    user: 'root',
-    password: process.env.DB_PASSWORD,
-    database: 'hotel_miranda',
-  });
-  await connection.execute(query, params);
+    await (0, mongoConnector_1.connectToDb)();
+    const contactId = new mongoose_1.default.Types.ObjectId(contact.contact_id); // Convertir el valor de user.id a ObjectId
+    const result = await contactSchemas_1.ContactModel.updateOne({ _id: contactId }, // Filtro por el campo _id
+    contact);
 };
 exports.updateContact = updateContact;
 const deleteContact = async (contact_id) => {
-  const query = 'DELETE FROM contact WHERE id = ?';
-  const params = [contact_id];
-  let connection = await promise_1.default.createConnection({
-    host: 'localhost',
-    user: 'root',
-    password: process.env.DB_PASSWORD,
-    database: 'hotel_miranda',
-  });
-  await connection.execute(query, params);
+    await (0, mongoConnector_1.connectToDb)();
+    await contactSchemas_1.ContactModel.deleteOne({ _id: contact_id });
 };
 exports.deleteContact = deleteContact;
+function parseDate(date) {
+    return date.toISOString().split('T')[0];
+}
+function mapToContactResponse(contactModel) {
+    return {
+        // id: contactModel._id.toString(),
+        contact_id: contactModel._id.toString(),
+        date: parseDate(contactModel.date),
+        customer: contactModel.customer,
+        comment: contactModel.comment,
+    };
+}

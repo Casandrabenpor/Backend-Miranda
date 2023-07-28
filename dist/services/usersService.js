@@ -4,87 +4,59 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.deleteUser = exports.updateUser = exports.addUser = exports.getById = exports.getUser = void 0;
-const promise_1 = __importDefault(require("mysql2/promise"));
+const userSchemas_1 = require("../mongoSchemas/userSchemas");
+const mongoose_1 = __importDefault(require("mongoose"));
+const mongoConnector_1 = require("../util/mongoConnector");
 const getUser = async () => {
-    const query = 'SELECT id,contact,description,email,name,startDate,status from users;';
-    let connection = await promise_1.default.createConnection({
-        host: 'localhost',
-        user: 'root',
-        password: process.env.DB_PASSWORD,
-        database: 'hotel_miranda',
+    await (0, mongoConnector_1.connectToDb)();
+    let mongoResult = await userSchemas_1.UserModel.find();
+    let result = mongoResult.map((user) => {
+        return mapToUserResponse(user);
     });
-    const [rows] = await connection.execute(query);
-    await connection.end();
-    return rows;
+    return result;
 };
 exports.getUser = getUser;
 const getById = async (userId) => {
-    const query = 'SELECT id,contact,description,email,name,startDate,status from users WHERE id = ?;';
-    const params = [userId];
-    let connection = await promise_1.default.createConnection({
-        host: 'localhost',
-        user: 'root',
-        password: process.env.DB_PASSWORD,
-        database: 'hotel_miranda',
-    });
-    const [rows] = await connection.execute(query, params);
-    let users = rows;
-    await connection.end();
-    return users[0];
+    await (0, mongoConnector_1.connectToDb)();
+    let result = await userSchemas_1.UserModel.findById(userId);
+    return result;
 };
 exports.getById = getById;
 const addUser = async (user) => {
-    const query = 'INSERT INTO users (contact,description,email,name,startDate,status) ' +
-        'VALUES (?,?,?,?,?,?)';
-    const params = [
-        user.contact,
-        user.description,
-        user.email,
-        user.name,
-        user.startDate,
-        user.status,
-    ];
-    let connection = await promise_1.default.createConnection({
-        host: 'localhost',
-        user: 'root',
-        password: process.env.DB_PASSWORD,
-        database: 'hotel_miranda',
-    });
-    await connection.execute(query, params);
+    await (0, mongoConnector_1.connectToDb)();
+    let result = await new userSchemas_1.UserModel(user).save();
+    return mapToUserResponse(result);
 };
 exports.addUser = addUser;
 const updateUser = async (user) => {
-    const query = 'UPDATE users ' +
-        'SET contact = ? , description = ? , email = ? , ' +
-        'name = ? , startDate = ? , status = ? ' +
-        'WHERE id = ?';
-    const params = [
-        user.contact,
-        user.description,
-        user.email,
-        user.name,
-        user.startDate,
-        user.status,
-        user.id,
-    ];
-    let connection = await promise_1.default.createConnection({
-        host: 'localhost',
-        user: 'root',
-        password: process.env.DB_PASSWORD,
-        database: 'hotel_miranda',
-    });
-    await connection.execute(query, params);
+    await (0, mongoConnector_1.connectToDb)();
+    const userId = new mongoose_1.default.Types.ObjectId(user.id); // Convertir el valor de user.id a ObjectId
+    const result = await userSchemas_1.UserModel.updateOne({ _id: userId }, // Filtro por el campo _id
+    user);
 };
 exports.updateUser = updateUser;
 const deleteUser = async (id) => {
-    const query = 'DELETE FROM users WHERE id = ?';
-    const params = [id];
-    let connection = await promise_1.default.createConnection({
-        host: 'localhost',
-        user: 'root',
-        password: process.env.DB_PASSWORD,
-        database: 'hotel_miranda',
-    });
-    await connection.execute(query, params);
+    await (0, mongoConnector_1.connectToDb)();
+    await userSchemas_1.UserModel.deleteOne({ _id: id });
 };
 exports.deleteUser = deleteUser;
+function parseDate(date) {
+    return date.toISOString().split('T')[0];
+}
+function formatPhoneNumber(phoneNumber) {
+    const digitsOnly = phoneNumber.replace(/\D/g, ''); // Elimina todos los caracteres que no sean dígitos
+    const formatted = digitsOnly.replace(/(\d{3})(\d{3})(\d{4})/, '$1-$2-$3'); // Agrega guiones en la posición adecuada
+    return formatted;
+}
+function mapToUserResponse(userModel) {
+    return {
+        contact: formatPhoneNumber(userModel.contact),
+        description: userModel.description,
+        email: userModel.email,
+        password: userModel.password,
+        id: userModel._id.toString(),
+        name: userModel.name,
+        startDate: parseDate(userModel.startDate),
+        status: userModel.status,
+    };
+}
